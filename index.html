@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>站点部署验证页</title>
+<title>亚权 · 个人工作台</title>
 <style>
   :root{
     --brand:#FF6B35;
@@ -19,80 +19,128 @@
     background:var(--bg);color:var(--ink);line-height:1.6;
     padding:32px 20px;
   }
-  .wrap{max-width:920px;margin:0 auto;}
+  .wrap{max-width:1080px;margin:0 auto;}
   header{
     background:linear-gradient(135deg,var(--brand),var(--brand-dark));
     color:#fff;border-radius:16px;padding:36px 32px;margin-bottom:24px;
   }
-  header h1{font-size:26px;font-weight:800;letter-spacing:.5px;}
-  header p{margin-top:8px;opacity:.92;font-size:15px;}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+  header h1{font-size:28px;font-weight:800;letter-spacing:.5px;}
+  header .sub{margin-top:8px;opacity:.92;font-size:15px;}
+  header .meta{margin-top:14px;font-size:13px;opacity:.82;}
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px;}
+  .stat{
+    background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;flex:1;min-width:110px;text-align:center;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .stat .n{font-size:24px;font-weight:800;color:var(--brand-dark);}
+  .stat .t{font-size:12px;color:var(--muted);margin-top:2px;}
+  .group{margin-bottom:28px;}
+  .group h2{
+    font-size:18px;color:var(--brand-dark);margin-bottom:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .group h2::before{
+    content:"";width:4px;height:18px;background:var(--brand);border-radius:2px;
+  }
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
   .card{
     background:#fff;border:1px solid var(--line);border-radius:14px;
     padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04);
+    transition:.2s;display:flex;flex-direction:column;
   }
-  .card .label{font-size:13px;color:var(--muted);}
-  .card .value{font-size:18px;font-weight:700;margin-top:6px;}
-  .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;}
-  .badge.wait{background:#fff3ed;color:var(--brand-dark);}
-  .badge.ok{background:#e8f7ee;color:#1a7f43;}
-  section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:24px;}
-  section h2{font-size:17px;margin-bottom:12px;color:var(--brand-dark);}
-  ol{padding-left:20px;}
-  ol li{margin-bottom:8px;font-size:14px;}
-  code{background:#f3f4f6;padding:2px 6px;border-radius:5px;font-size:13px;color:var(--brand-dark);}
+  .card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,107,53,.12);border-color:var(--brand);}
+  .card h3{font-size:16px;margin-bottom:8px;}
+  .card p{font-size:13px;color:var(--muted);flex:1;}
+  .card .foot{margin-top:14px;display:flex;align-items:center;justify-content:space-between;}
+  .tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;}
+  .tag.doing{background:#fff3ed;color:var(--brand-dark);}
+  .tag.plan{background:#f3f4f6;color:#6b7280;}
+  .tag.ext{background:#eaf2ff;color:#1d4ed8;}
+  .card a{color:var(--brand-dark);text-decoration:none;font-size:13px;font-weight:600;}
   footer{text-align:center;color:var(--muted);font-size:13px;margin-top:8px;}
-  @media(max-width:600px){header{padding:28px 22px;}body{padding:20px 14px;}}
+  @media(max-width:600px){header{padding:28px 22px;}body{padding:20px 14px;}.grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>站点部署验证页</h1>
-    <p>本页用于跑通 Cloudflare Pages 部署链路。本地预览无误后，push 到 Git 仓库即可上线。</p>
+    <h1>亚权 · 个人工作台</h1>
+    <div class="sub">鸣鸣很忙集团 · 赵一鸣零食 惠州仓 ｜ 配送组长 / 调度组长</div>
+    <div class="meta">最后更新：2026-10-23 ｜ 内容持续完善中</div>
   </header>
 
-  <div class="grid">
-    <div class="card">
-      <div class="label">部署方式</div>
-      <div class="value">Cloudflare Pages</div>
-    </div>
-    <div class="card">
-      <div class="label">访问状态</div>
-      <div class="value"><span class="badge wait">待部署</span></div>
-    </div>
-    <div class="card">
-      <div class="label">自定义域名</div>
-      <div class="value"><span class="badge wait">未绑定</span></div>
-    </div>
-    <div class="card">
-      <div class="label">SSL 证书</div>
-      <div class="value"><span class="badge wait">未签发</span></div>
+  <div class="stats">
+    <div class="stat"><div class="n">9</div><div class="t">工作板块</div></div>
+    <div class="stat"><div class="n">4</div><div class="t">进行中</div></div>
+    <div class="stat"><div class="n">3</div><div class="t">规划中</div></div>
+    <div class="stat"><div class="n">2</div><div class="t">系统入口</div></div>
+  </div>
+
+  <div class="group">
+    <h2>主业 · 惠州仓配送全链路</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>配送运营看板</h3>
+        <p>追踪配送履约及时率、固定车沉淀率、带板覆盖率等核心 KPI。</p>
+        <div class="foot"><span class="tag plan">规划中</span></div>
+      </div>
+      <div class="card">
+        <h3>离职交接看板</h3>
+        <p>工作交接清单与进度追踪，确保离职前把手上事项沉淀清楚。</p>
+        <div class="foot"><span class="tag doing">进行中</span></div>
+      </div>
+      <div class="card">
+        <h3>带板运输拆板操作规范</h3>
+        <p>惠州仓带板运输拆板标准作业流程文档，固化隐性经验。</p>
+        <div class="foot"><span class="tag doing">进行中</span></div>
+      </div>
+      <div class="card">
+        <h3>7S 责任卡</h3>
+        <p>整理 / 整顿 / 清扫 / 清洁 / 素养 / 安全 / 节约 责任卡（76×110mm 可打印）。</p>
+        <div class="foot"><span class="tag doing">进行中</span></div>
+      </div>
+      <div class="card">
+        <h3>仓配服务回访</h3>
+        <p>1 个月内完成自营 / 加盟门店服务回访项目，含话术与跟踪表。</p>
+        <div class="foot"><span class="tag doing">进行中</span></div>
+      </div>
+      <div class="card">
+        <h3>TMS App 改善提案</h3>
+        <p>配送司机端 TMS App 体验改善提案（问题点 / 改善措施）。</p>
+        <div class="foot"><span class="tag plan">规划中</span></div>
+      </div>
     </div>
   </div>
 
-  <section>
-    <h2>本地预览</h2>
-    <ol>
-      <li>直接双击 <code>index.html</code> 即可在浏览器查看。</li>
-      <li>或在本目录运行 <code>python -m http.server 8000</code>，访问 <code>http://localhost:8000</code>。</li>
-    </ol>
-  </section>
+  <div class="group">
+    <h2>副业 · Gregory Wallpaper</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>壁纸店展示页</h3>
+        <p>小红书 AI 生成壁纸展示与落地页，iPhone 样机预览。</p>
+        <div class="foot"><span class="tag plan">规划中</span></div>
+      </div>
+    </div>
+  </div>
 
-  <section>
-    <h2>上线步骤（你本人操作）</h2>
-    <ol>
-      <li>注册 GitHub 账号，新建一个空仓库（如 <code>my-site</code>）。</li>
-      <li>将本目录 push 到该仓库（命令见 README）。</li>
-      <li>注册 Cloudflare 账号，进入 Pages → 连接 Git 仓库。</li>
-      <li>框架预设选「无」，构建命令留空，发布目录填 <code>./</code>。</li>
-      <li>部署完成后获得 <code>*.pages.dev</code> 临时域名。</li>
-      <li>购买域名并将其 NS 改为 Cloudflare 提供的地址。</li>
-      <li>在 Cloudflare 添加自定义域名，SSL 选 Full，强制 HTTPS。</li>
-    </ol>
-  </section>
+  <div class="group">
+    <h2>常用系统入口</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>BI 及时率看板</h3>
+        <p>bi.zymls.com ｜ 配送履约及时率数据看板（需账号登录）。</p>
+        <div class="foot"><span class="tag ext">内网系统</span><a href="https://bi.zymls.com" target="_blank">打开 ↗</a></div>
+      </div>
+      <div class="card">
+        <h3>VTMS 运输订单</h3>
+        <p>vtms.hnlshm.com ｜ 运输订单管理平台（需账号登录）。</p>
+        <div class="foot"><span class="tag ext">内网系统</span><a href="https://vtms.hnlshm.com" target="_blank">打开 ↗</a></div>
+      </div>
+    </div>
+  </div>
 
-  <footer>示例站点 · 替换本页内容即可上线你的真实页面</footer>
+  <footer>个人工作台骨架 · 板块与文案为占位，后续按需求逐步填充真实内容</footer>
 </div>
 </body>
 </html>

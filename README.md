@@ -1,6 +1,7 @@
-# 站点部署仓库（Cloudflare Pages）
+# 站点部署仓库（EdgeOne Pages / Makers）
 
-本仓库用于跑通「Cloudflare Pages + 自有域名」免费部署流程。
+本仓库用于跑通「EdgeOne Pages（腾讯云）+ 自有域名」免费部署流程。
+EdgeOne Pages 是腾讯云出品的边缘托管平台，国内访问快、永久免费、免备案（选对加速区域即可）。
 
 ## 目录结构
 - `index.html` —— 站点入口（单文件，替换内容即可上线你的真实页面）
@@ -11,45 +12,58 @@
 - 直接双击 `index.html`
 - 或：`python -m http.server 8000` → 打开 http://localhost:8000
 
-## 部署流程（你本人操作）
+## 部署流程
 
-### 1. 注册 GitHub
-- 打开 https://github.com 注册账号。
-- 新建仓库（New repository），名称如 `my-site`，选 Public，不勾 README（保持空仓库）。
+### 1. 准备 Git 仓库（选一个）
+EdgeOne 控制台支持导入 **GitHub** 或 **Gitee** 仓库。你还没账号，二选一新注册一个：
+- **Gitee（推荐，国内）**：gitee.com，全中文、访问稳定、不用科学上网。
+- **GitHub（通用）**：github.com，生态最大。
+新建一个**空仓库**（Public，不要勾 README）。
 
-### 2. 推送到 GitHub
-在本地（本目录）执行，把 `<用户名>` 和 `<仓库名>` 换成你自己的：
+> 本地仓库（`site/`）已由助手初始化并提交。你建好空仓库后，把仓库地址发我，
+> 我帮你执行 `git remote add` + `git push`（需你本地 Git 已登录该平台）。
 
-```bash
-git remote add origin https://github.com/<用户名>/<仓库名>.git
-git branch -M main
-git push -u origin main
-```
+### 2. 注册腾讯云并开通 EdgeOne Pages 免费版
+- 打开 https://console.cloud.tencent.com/edgeone 登录（可用 Gmail / 微信 / QQ 注册）。
+- 进入 EdgeOne 控制台，首次会提示「立即开通」免费版 —— **免费版长期有效、无需信用卡**，直接开通。
 
-### 3. 注册并配置 Cloudflare Pages
-- 打开 https://www.cloudflare.com 注册账号。
-- 控制台 → **Workers 和 Pages** → **创建** → **Pages** → **连接到 Git**。
-- 授权 GitHub，选择刚推的仓库。
-- 构建设置：框架预设选「无（无框架）」，构建命令留空，发布目录填 `.`（或 `./`）。
-- 点击「保存并部署」，等待几十秒，获得 `xxx.pages.dev` 临时域名。
+### 3. 在控制台创建项目并导入 Git 仓库
+- 控制台 → **Pages**（或 Makers）→ **创建项目** → 选「通过导入 Git 仓库创建」。
+- 点击 **GitHub / Gitee** 授权（授予 EdgeOne 访问你仓库的权限）。
+- 选择第 1 步里建好的仓库。
 
-### 4. 购买并绑定自定义域名（免备案）
-- 在阿里云 / 腾讯云 / NameSilo 购买域名（约 50–80 元/年），**不要选大陆服务器，走 Cloudflare 海外 CDN 即无需 ICP 备案**。
-- 回到 Cloudflare → 你的 Pages 项目 → **自定义域** → 添加你的域名。
-- 按提示把域名的 **NS 记录** 改为 Cloudflare 提供的两组地址（在域名注册商后台操作）。
-- 等待 NS 生效（几分钟到 48 小时），Cloudflare 自动签发 SSL 证书。
-- 在 **SSL/TLS** 中将模式设为 `Full`，并开启「始终使用 HTTPS」。
+### 4. 构建配置（静态 HTML 站点的关键）
+- 框架预设：选「无 / 静态」或直接用默认（纯 HTML 无需构建）。
+- **构建命令：留空**（没有 npm 构建步骤）。
+- **输出目录：填 `./`**（项目根目录就是 `index.html` 所在位置）。
+- **加速区域（备案相关，务必看）：**
+  - 选「**全球可用区（不含中国大陆）**」→ 自定义域名 **免工信部备案**（推荐，符合"免备案"诉求）。
+  - 选「**中国大陆可用区**」→ 国内延迟最低（实测境内 <100ms），但添加自定义域名**必须完成 ICP 备案**。
+  - 选「全球可用区」→ 也要备案。
+- 点击「开始部署」，几十秒后获得临时域名（形如 `xxx.edgeone.app` 或 `xxx.edgeone.site`）。
 
-### 5. 后续更新
-每次修改 `index.html` 后：
+### 5. 绑定自定义域名（若要自有域名）
+- 在 EdgeOne 项目设置 → **自定义域名** → 添加你的域名（如 `www.your.com` 或根域名）。
+- 平台会给出一条 **CNAME 记录值**（形如 `a4285573.xxx.dns.edgeone.site.`）。
+- 去你的**域名注册商**（阿里云 / 腾讯云 / NameSilo 等）DNS 管理页，添加：
+  - 类型：`CNAME`
+  - 主机记录：`www`（或 `@` 代表根域名，注意 `@` 可能影响邮箱 MX 解析）
+  - 记录值：粘贴 EdgeOne 给的 CNAME 值
+  - TTL：默认 30 分钟（想快可改小，但不宜过低）
+- 回 EdgeOne 点「验证」，等待 DNS 生效（几分钟到几小时）。
+- **SSL 证书自动签发**，无需手动配置。可开启「强制 HTTPS」。
+
+### 6. 后续更新
+每次改完 `index.html` 后：
 ```bash
 git add .
 git commit -m "update"
 git push
 ```
-Cloudflare 会自动重新部署。
+EdgeOne 会自动拉取并重新部署。
 
 ## 说明
-- 该路线**不需要 ICP 备案**（站点不经大陆服务器）。
-- Cloudflare Pages 免费额度：无限带宽、500 次构建/月、允许商用。
-- 免费顶级域名（.tk 等）有收回风险，不建议用于长期项目。
+- **免备案条件**：加速区域选「全球可用区（不含中国大陆）」即可，自定义域名也不需 ICP 备案。
+- **免费额度**：永久免费、无需信用卡；每月 50GB 加速流量（正常业务不受影响），构建不限次。
+- **国内速度**：EdgeOne 有 3200+ 边缘节点，境内延迟远低于 Cloudflare（但选"不含大陆"区会走亚太边缘，略慢于备案的大陆区）。
+- 免费顶级域名（.tk 等）有收回风险，不建议长期项目使用；自有域名约 50–80 元/年。

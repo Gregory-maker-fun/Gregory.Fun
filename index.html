@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>站点部署验证页</title>
+<style>
+  :root{
+    --brand:#FF6B35;
+    --brand-dark:#D9480F;
+    --ink:#1f2430;
+    --muted:#6b7280;
+    --line:#ececf1;
+    --bg:#fafafa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;
+    padding:32px 20px;
+  }
+  .wrap{max-width:920px;margin:0 auto;}
+  header{
+    background:linear-gradient(135deg,var(--brand),var(--brand-dark));
+    color:#fff;border-radius:16px;padding:36px 32px;margin-bottom:24px;
+  }
+  header h1{font-size:26px;font-weight:800;letter-spacing:.5px;}
+  header p{margin-top:8px;opacity:.92;font-size:15px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .card .label{font-size:13px;color:var(--muted);}
+  .card .value{font-size:18px;font-weight:700;margin-top:6px;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;}
+  .badge.wait{background:#fff3ed;color:var(--brand-dark);}
+  .badge.ok{background:#e8f7ee;color:#1a7f43;}
+  section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:24px;}
+  section h2{font-size:17px;margin-bottom:12px;color:var(--brand-dark);}
+  ol{padding-left:20px;}
+  ol li{margin-bottom:8px;font-size:14px;}
+  code{background:#f3f4f6;padding:2px 6px;border-radius:5px;font-size:13px;color:var(--brand-dark);}
+  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:8px;}
+  @media(max-width:600px){header{padding:28px 22px;}body{padding:20px 14px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>站点部署验证页</h1>
+    <p>本页用于跑通 Cloudflare Pages 部署链路。本地预览无误后，push 到 Git 仓库即可上线。</p>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">部署方式</div>
+      <div class="value">Cloudflare Pages</div>
+    </div>
+    <div class="card">
+      <div class="label">访问状态</div>
+      <div class="value"><span class="badge wait">待部署</span></div>
+    </div>
+    <div class="card">
+      <div class="label">自定义域名</div>
+      <div class="value"><span class="badge wait">未绑定</span></div>
+    </div>
+    <div class="card">
+      <div class="label">SSL 证书</div>
+      <div class="value"><span class="badge wait">未签发</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2>本地预览</h2>
+    <ol>
+      <li>直接双击 <code>index.html</code> 即可在浏览器查看。</li>
+      <li>或在本目录运行 <code>python -m http.server 8000</code>，访问 <code>http://localhost:8000</code>。</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>上线步骤（你本人操作）</h2>
+    <ol>
+      <li>注册 GitHub 账号，新建一个空仓库（如 <code>my-site</code>）。</li>
+      <li>将本目录 push 到该仓库（命令见 README）。</li>
+      <li>注册 Cloudflare 账号，进入 Pages → 连接 Git 仓库。</li>
+      <li>框架预设选「无」，构建命令留空，发布目录填 <code>./</code>。</li>
+      <li>部署完成后获得 <code>*.pages.dev</code> 临时域名。</li>
+      <li>购买域名并将其 NS 改为 Cloudflare 提供的地址。</li>
+      <li>在 Cloudflare 添加自定义域名，SSL 选 Full，强制 HTTPS。</li>
+    </ol>
+  </section>
+
+  <footer>示例站点 · 替换本页内容即可上线你的真实页面</footer>
+</div>
+</body>
+</html>

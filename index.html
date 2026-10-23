@@ -3,25 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gregory · 个人工作台</title>
-<meta name="description" content="Gregory（亚权）的个人工作台封面——个人介绍、个性签名与作品导航。">
+<title>Gregory</title>
+<meta name="description" content="Gregory 个人封面——头像、姓名与个性签名。">
 <style>
   :root{
     --brand:#FF6B35;
     --brand-dark:#D9480F;
     --ink:#1f2430;
-    --muted:#6b7280;
-    --line:#ececf1;
-    --bg:#fafafa;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
+  html,body{height:100%;}
   body{
     font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
-    color:var(--ink);line-height:1.6;background:var(--bg);
+    color:var(--ink);line-height:1.6;
   }
 
-  /* ===== 封面 Hero ===== */
   .cover{
     position:relative;overflow:hidden;
     min-height:100svh;display:flex;flex-direction:column;
@@ -47,18 +43,13 @@
 
   .name{
     margin-top:30px;font-size:clamp(40px,9vw,76px);font-weight:800;
-    letter-spacing:1px;color:var(--ink);
+    letter-spacing:1px;
     background:linear-gradient(135deg,var(--brand-dark),var(--brand));
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   }
-  .role{
-    margin-top:10px;font-size:clamp(14px,3.2vw,18px);
-    color:var(--brand-dark);font-weight:600;letter-spacing:.5px;
-  }
-  .role .dot{opacity:.5;margin:0 8px;}
 
   .sign{
-    position:relative;margin-top:30px;padding:0 8px;
+    position:relative;margin-top:28px;padding:0 8px;
     max-width:600px;font-size:clamp(16px,4.2vw,21px);color:#41464f;
     font-style:italic;line-height:1.9;
   }
@@ -67,59 +58,14 @@
     font-size:60px;line-height:1;color:var(--brand);opacity:.35;font-family:Georgia,serif;
   }
 
-  .scroll-hint{
-    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:1;
-    font-size:13px;color:var(--brand-dark);opacity:.7;letter-spacing:1px;
-    animation:bob 2s ease-in-out infinite;
-  }
-  @keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,6px);}}
-
-  /* ===== 工作台 ===== */
-  .workbench{max-width:1080px;margin:0 auto;padding:48px 20px 32px;}
-  .sec-title{
-    font-size:20px;color:var(--brand-dark);margin-bottom:18px;
-    display:flex;align-items:center;gap:8px;
-  }
-  .sec-title::before{content:"";width:4px;height:20px;background:var(--brand);border-radius:2px;}
-  .stats{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:30px;}
-  .stat{
-    background:#fff;border:1px solid var(--line);border-radius:12px;
-    padding:14px 18px;flex:1;min-width:110px;text-align:center;
-    box-shadow:0 1px 3px rgba(0,0,0,.04);
-  }
-  .stat .n{font-size:24px;font-weight:800;color:var(--brand-dark);}
-  .stat .t{font-size:12px;color:var(--muted);margin-top:2px;}
-  .group{margin-bottom:28px;}
-  .group h2{font-size:18px;color:var(--brand-dark);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-  .group h2::before{content:"";width:4px;height:18px;background:var(--brand);border-radius:2px;}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
-  .card{
-    background:#fff;border:1px solid var(--line);border-radius:14px;
-    padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04);
-    transition:.2s;display:flex;flex-direction:column;
-  }
-  .card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,107,53,.12);border-color:var(--brand);}
-  .card h3{font-size:16px;margin-bottom:8px;}
-  .card p{font-size:13px;color:var(--muted);flex:1;}
-  .card .foot{margin-top:14px;display:flex;align-items:center;justify-content:space-between;}
-  .tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;}
-  .tag.doing{background:#fff3ed;color:var(--brand-dark);}
-  .tag.plan{background:#f3f4f6;color:#6b7280;}
-  .tag.ext{background:#eaf2ff;color:#1d4ed8;}
-  .card a{color:var(--brand-dark);text-decoration:none;font-size:13px;font-weight:600;}
-  footer{text-align:center;color:var(--muted);font-size:13px;margin:24px 0 8px;}
-
   @media(max-width:600px){
     .cover{padding:48px 18px;}
     .avatar{border-width:5px;border-radius:26px;}
-    .workbench{padding:36px 14px 24px;}
-    .grid{grid-template-columns:1fr;}
   }
 </style>
 </head>
 <body>
 
-<!-- 封面 -->
 <section class="cover">
   <div class="blob a"></div>
   <div class="blob b"></div>
@@ -128,87 +74,9 @@
       <img src="assets/avatar.jpg" alt="Gregory 头像">
     </div>
     <h1 class="name">Gregory</h1>
-    <p class="role">亚权<span class="dot">·</span>个人工作台</p>
     <blockquote class="sign">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</blockquote>
   </div>
-  <div class="scroll-hint">向下滚动 ↓</div>
 </section>
-
-<!-- 工作台 -->
-<div class="workbench">
-  <div class="sec-title">工作台导航</div>
-  <div class="stats">
-    <div class="stat"><div class="n">9</div><div class="t">工作板块</div></div>
-    <div class="stat"><div class="n">4</div><div class="t">进行中</div></div>
-    <div class="stat"><div class="n">3</div><div class="t">规划中</div></div>
-    <div class="stat"><div class="n">2</div><div class="t">系统入口</div></div>
-  </div>
-
-  <div class="group">
-    <h2>主业 · 惠州仓配送全链路</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>配送运营看板</h3>
-        <p>追踪配送履约及时率、固定车沉淀率、带板覆盖率等核心 KPI。</p>
-        <div class="foot"><span class="tag plan">规划中</span></div>
-      </div>
-      <div class="card">
-        <h3>离职交接看板</h3>
-        <p>工作交接清单与进度追踪，确保离职前把手上事项沉淀清楚。</p>
-        <div class="foot"><span class="tag doing">进行中</span></div>
-      </div>
-      <div class="card">
-        <h3>带板运输拆板操作规范</h3>
-        <p>惠州仓带板运输拆板标准作业流程文档，固化隐性经验。</p>
-        <div class="foot"><span class="tag doing">进行中</span></div>
-      </div>
-      <div class="card">
-        <h3>7S 责任卡</h3>
-        <p>整理 / 整顿 / 清扫 / 清洁 / 素养 / 安全 / 节约 责任卡（76×110mm 可打印）。</p>
-        <div class="foot"><span class="tag doing">进行中</span></div>
-      </div>
-      <div class="card">
-        <h3>仓配服务回访</h3>
-        <p>1 个月内完成自营 / 加盟门店服务回访项目，含话术与跟踪表。</p>
-        <div class="foot"><span class="tag doing">进行中</span></div>
-      </div>
-      <div class="card">
-        <h3>TMS App 改善提案</h3>
-        <p>配送司机端 TMS App 体验改善提案（问题点 / 改善措施）。</p>
-        <div class="foot"><span class="tag plan">规划中</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="group">
-    <h2>副业 · Gregory Wallpaper</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>壁纸店展示页</h3>
-        <p>小红书 AI 生成壁纸展示与落地页，iPhone 样机预览。</p>
-        <div class="foot"><span class="tag plan">规划中</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="group">
-    <h2>常用系统入口</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>BI 及时率看板</h3>
-        <p>bi.zymls.com ｜ 配送履约及时率数据看板（需账号登录）。</p>
-        <div class="foot"><span class="tag ext">内网系统</span><a href="https://bi.zymls.com" target="_blank" rel="noopener">打开 ↗</a></div>
-      </div>
-      <div class="card">
-        <h3>VTMS 运输订单</h3>
-        <p>vtms.hnlshm.com ｜ 运输订单管理平台（需账号登录）。</p>
-        <div class="foot"><span class="tag ext">内网系统</span><a href="https://vtms.hnlshm.com" target="_blank" rel="noopener">打开 ↗</a></div>
-      </div>
-    </div>
-  </div>
-
-  <footer>个人工作台 · 封面已上线，板块与文案为占位，后续按需求逐步填充真实内容</footer>
-</div>
 
 </body>
 </html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html data-page-node-id="jqA678Jj8qzDyntfFdkRE8" lang="zh-CN">
+<head data-page-node-id="iiH4N5VuhNi8bJNF2A3Ngg">
+<script data-page-node-id="ZLU4ugUIX7bWVx2GB2oYpg" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="9b84nYJqYEacLso9bC2znu" charset="UTF-8">
+<meta data-page-node-id="ILMcSsvLtKM2mYECYShDSL" content="width=device-width, initial-scale=1.0" name="viewport">
+<title data-page-node-id="UrPtjFORmfRi5uMtEqqIHs" data-pnid-children="ZS8D2cxHEHiFUeujRozUsW">商丘仓 → 门店 批量货车测距工具（高德·货车模式）</title>
+<style data-page-node-id="yXQSCR8K9NRwfIwCdf0eTC" data-pnid-children="EXuKDAnAtM3AJo9Qnc75mQ">
+  :root{
+    --brand:#FF6B35; --brand-deep:#D9480F; --ink:#2b2420; --muted:#8a7f78;
+    --bg:#faf6f2; --card:#ffffff; --line:#f0e5dc; --ok:#2f9e44; --bad:#e03131;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+  header{background:linear-gradient(100deg,var(--brand-deep),var(--brand));color:#fff;padding:18px 28px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  header h1{font-size:20px;font-weight:700;letter-spacing:.5px}
+  header .sub{font-size:12px;opacity:.85}
+  main{max-width:1240px;margin:18px auto 60px;padding:0 20px;display:grid;grid-template-columns:400px 1fr;gap:16px;align-items:start}
+  @media (max-width:980px){main{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 2px 10px rgba(217,72,15,.05)}
+  .card h2{font-size:14px;color:var(--brand-deep);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2 .step{background:var(--brand);color:#fff;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:none}
+  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+  input[type=text],input[type=number],select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;background:#fffdfb;color:var(--ink)}
+  input:focus,textarea:focus,select:focus{outline:2px solid rgba(255,107,53,.25);border-color:var(--brand)}
+  textarea{min-height:150px;resize:vertical;font-family:ui-monospace,Consolas,monospace;line-height:1.7}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .hint{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.6}
+  .hint a{color:var(--brand-deep)}
+  button{border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;transition:.15s}
+  button.primary{background:linear-gradient(100deg,var(--brand-deep),var(--brand));color:#fff}
+  button.primary:hover{filter:brightness(1.06)}
+  button.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  button.ghost:hover{border-color:var(--brand);color:var(--brand-deep)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .btns{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}
+  @media (max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .stat b{display:block;font-size:22px;color:var(--brand-deep)}
+  .stat span{font-size:11.5px;color:var(--muted)}
+  .tblwrap{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  thead th{position:sticky;top:0;background:#fff4ec;color:var(--brand-deep);text-align:left;padding:8px 10px;font-weight:600;white-space:nowrap;border-bottom:1px solid var(--line);z-index:1}
+  tbody td{padding:7px 10px;border-bottom:1px solid #f8f1ea;vertical-align:top}
+  tbody tr:hover{background:#fffaf6}
+  .ok{color:var(--ok);font-weight:600}
+  .bad{color:var(--bad);font-weight:600}
+  .doing{color:var(--brand);font-weight:600}
+  .bar{height:8px;background:#f3e7de;border-radius:99px;overflow:hidden;margin-top:10px}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand-deep),var(--brand));transition:width .3s}
+  details{margin-top:14px}
+  summary{cursor:pointer;font-size:13px;color:var(--brand-deep);font-weight:600}
+  details ol{margin:10px 0 0 18px;line-height:2;font-size:12.5px;color:#5d534c}
+  details code{background:#fff1e8;padding:1px 6px;border-radius:4px;color:var(--brand-deep);font-size:12px}
+  .tag{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11px;background:#fff1e8;color:var(--brand-deep);margin-left:6px}
+</style>
+</head>
+<body data-page-node-id="fGYtnc6abm5EAqH6BHLLp5">
+<header data-page-node-id="1oMSvPOELM06Pn78wgVXjN">
+  <h1 data-page-node-id="Zdm5vh0PFADZkjD5iNnJ73"><!--pnid:rcJewevJgJMp2CYgh7Ludi-->商丘仓 → 门店 · 批量货车测距</h1>
+  <span data-page-node-id="be51Q7BR91Za4H5Bff7IH9" class="sub"><!--pnid:42cHgvMDAQ5QUKeitwvPAl-->高德地图 · 货车模式（AMap.TruckDriving）· 最短距离口径 = App 三条路线中距离最短一条</span>
+</header>
+
+<main data-page-node-id="Lj5BWGvDfvQaDmaaoF8Y6B">
+  <!--pnid:il5VX8yBYDFqX60R6cSbza--><!-- 左列：配置 -->
+  <div data-page-node-id="CNHJoAGfy9pgZPSlqWB01e">
+    <div data-page-node-id="5DxhGqOenwUCutLEMZ7NfP" class="card">
+      <h2 data-page-node-id="2ZBp6LaltKQrbGFaTOeN4t"><span data-page-node-id="I7mmsJ0Ufin50rcR4O0lLj" class="step"><!--pnid:cus1135kn7OXd0ATgEBy4h-->1</span><!--pnid:9zCUbEHtaIHFf3vKU9vKvm-->高德 Key 配置 <span data-page-node-id="Zu97Q3l5IRTBlNxXLDmQ5g" class="tag"><!--pnid:RjrEjJSpGTFSgBdKgPlDrR-->仅需一次</span></h2>
+      <label data-page-node-id="EmSoNkYtWW6MXE1At7neYA"><!--pnid:Gi8jl7HJNXaf7WJ3qTI9w0-->Key（Web端 JS API 类型）</label>
+      <input data-page-node-id="4b2OtcIz5XNZoSeBxw6HXU" id="key" placeholder="如 3f1a2b...，在 lbs.amap.com 控制台创建" type="text">
+      <label data-page-node-id="5u305EIwJMrrIShVEpsBXe"><!--pnid:zcsfuDt4zaUwiShmGvIGY6-->安全密钥 securityJsCode（创建 Key 时一并生成）</label>
+      <input data-page-node-id="1Y8B7ElJG89TWOGP9mZe6l" id="jscode" placeholder="Key 详情页的『安全密钥』" type="text">
+      <div data-page-node-id="5LdjBIugxBPRP10ZSL7rvx" class="hint"><!--pnid:Gl2m7hVjbfmejJuVqlUsBN-->注册/创建 Key：<a data-page-node-id="jca4tacTWq5GGmHEcIbLpS" href="https://console.amap.com/dev/key/app" target="_blank"><!--pnid:HLxoP1juyGI4jMlkkNMLWv-->console.amap.com → 创建应用 → 添加 Key → 服务平台选「Web端(JS API)」</a><!--pnid:sC1hCjYAzXwliyyyhfvisz-->。个人认证免费，测距调用量完全够用。</div>
+    </div>
+
+    <div data-page-node-id="HjHqyQJuxgeER3OwkWJZF1" class="card" style="margin-top:16px">
+      <h2 data-page-node-id="1cG0uQLDwbXJdHwfUOtdwb"><span data-page-node-id="y6Kf2kbg3opi31wsSAFYLU" class="step"><!--pnid:eHHrx476k85uNP2nH1Q4qo-->2</span><!--pnid:VghUIHumzIZMBZhUqxaA8L-->仓库与车辆参数</h2>
+      <label data-page-node-id="ue1vnHupUwGxFwS9qw4P6L"><!--pnid:JCcQ0TFy0fcIUMuQ0ynxtn-->仓库地址（起点）</label>
+      <input data-page-node-id="9Erkg07bmimolH6rpu5yYo" id="depot" type="text" value="河南省商丘市梁园区振兴北路金马物流园">
+      <div data-page-node-id="j4XvuivdCZ8T0nsJnIGGVr" class="btns" style="margin-top:8px">
+        <button data-page-node-id="ZRTxSRFgCTVsHMZpiJupoz" class="ghost" id="btnDepot" onclick="locateDepot()"><!--pnid:AqWTgEdP7WZUuLQbHCHr82-->① 解析仓库坐标</button>
+        <span data-page-node-id="oBwv4PzOCSZfaTTvbmorlc" class="hint" id="depotPos" style="align-self:center"></span>
+      </div>
+      <div data-page-node-id="INPQruBvXSs3e31icxv1rO" class="row2">
+        <div data-page-node-id="834aZ88eTHoFqMV8swpC4X">
+          <label data-page-node-id="bGG3fd3KJiBdIrfDywUDyt"><!--pnid:mG9sKmWO8AJH2RnvFNpZsc-->车型</label>
+          <select data-page-node-id="2JsKVDKFQdStvlDYKjCsN3" id="size">
+            <option data-page-node-id="1rg2eBGJmuFd1P1EhmITf0" value="1"><!--pnid:cBLTak7A8VTpvRXSodcnw1-->1 微型货车（≤3.5m / ≤1.8t）</option>
+            <option data-page-node-id="iSK150FN8flf2uSHZX3RIh" selected value="2"><!--pnid:Y9L5StDQUw1vfGQ9olRgGW-->2 轻型货车（&lt;6m / ≤4.5t，4.2米箱货）</option>
+            <option data-page-node-id="lj9JMJyUsIrkvnN1Yr9BDp" value="3"><!--pnid:F4FxPWcm3wXq4qmCkoGueX-->3 中型货车（≥6m / 4.5~12t）</option>
+            <option data-page-node-id="XUflcxnvGZ7ukdLJzpjVzM" value="4"><!--pnid:1iG0XvEebzinREjSx7vtHp-->4 重型货车（≥6m / ≥12t）</option>
+          </select>
+        </div>
+        <div data-page-node-id="M8TP5oKkDQxmYQ2MpLLy63">
+          <label data-page-node-id="6woj8pOxVhFKASi2Jrb58o"><!--pnid:pLaAzEQAWokSTsG4AnTeBq-->策略口径</label>
+          <select data-page-node-id="xTpPwp8w3USc75AlHBqTpD" id="policyMode">
+            <option data-page-node-id="aGT9pHExnFcpltiKNEj7Ov" selected value="123"><!--pnid:RGHmPvarqn9OLFoO9CslFN-->标准（对齐App：3条取最短）</option>
+            <option data-page-node-id="qB1KT2n5TMyXCgr3Ve0Wfr" value="1"><!--pnid:3KIWSpJ3sRgzVP7xuLkldT-->快速（仅速度优先 1 条）</option>
+          </select>
+        </div>
+      </div>
+      <div data-page-node-id="Cbl25HlZAQh5J9tL2pQdGE" class="row3">
+        <div data-page-node-id="e6yA2xpioLGtpzwgsjm6dD"><label data-page-node-id="4QlqyXb2x2xZggCRWYCeSy"><!--pnid:dDqDQrhP5KD3qo0njPwEMp-->车宽(m)</label><input data-page-node-id="Rk6MOlBSijAEWVRaRvGJv4" id="width" step="0.1" type="number" value="2.5"></div>
+        <div data-page-node-id="uOA4V2refGisDepIE8NwTs"><label data-page-node-id="qaePHHmSONWz26gI40Dk8w"><!--pnid:zfmFzVLcfUXIuhIjUnY6hJ-->车高(m)</label><input data-page-node-id="G1aIdKpm2D3YHlbYWwy7Yf" id="height" step="0.1" type="number" value="3"></div>
+        <div data-page-node-id="zXcXXslsZQFNmGJlWQLuEk"><label data-page-node-id="56wHXnTxhmFNHG78y62reX"><!--pnid:GIgwUUY6NM5q5DLT9j0a1o-->总重(t)</label><input data-page-node-id="kE7iJTygxyBxTixNlwyiJQ" id="load" step="0.5" type="number" value="10"></div>
+      </div>
+      <div data-page-node-id="SfVs11xWOKdbmgNW09P447" class="hint"><!--pnid:PPuEvUaDThvAfLypKDSZ2I-->车辆参数决定限高/限重/限行规避，请按实际配送车型填写；口径默认对齐手机 App：分别按「速度优先 / 不走高速 / 避免收费」算 3 条，取距离最短一条，与你截图选 136km 的逻辑一致。</div>
+    </div>
+
+    <div data-page-node-id="QJrIWbadLbCJn1SSPVf65J" class="card" style="margin-top:16px">
+      <h2 data-page-node-id="xZP7A3u6lAj98PW2CgPhOw"><span data-page-node-id="MUuofZtJU8JWsLFNEOJ2ke" class="step"><!--pnid:7V8755cryJivTH5IOdABIh-->3</span><!--pnid:c94fB57icH5HaJFnCryiRK-->门店清单</h2>
+      <label data-page-node-id="fZsJTSxkKjDC9UIBHbEQwp"><!--pnid:mvN7Yt2TssTI9WKukl17sE-->粘贴门店（每行一条：门店名称,详细地址）或上传 Excel</label>
+      <textarea data-page-node-id="1Aaq5NkSlvN6vglk05KAVk" id="shops" placeholder="赵一鸣零食商丘归德路店,河南省商丘市梁园区归德路XX号&#10;赵一鸣零食虞城人民路店,河南省商丘市虞城县人民路XX号&#10;…&#10;（也可以只写：门店名称,城市 即自动用POI匹配）"></textarea>
+      <div data-page-node-id="iSSBr9nIcZTU2Dntt4rN5C" class="btns">
+        <input data-page-node-id="YHySeQICabvc1mZC08IWXJ" accept=".xlsx,.xls,.csv" id="file" type="file" style="display:none">
+        <button data-page-node-id="hYTx25XAKTjtPd62ZUfYC4" class="ghost" onclick="document.getElementById('file').click()"><!--pnid:3gEou66LkfRWDj0V5NAyIa-->上传 Excel/CSV</button>
+        <button data-page-node-id="hwIz9wPREx3DMP5FqIwZDe" class="ghost" onclick="parseText()"><!--pnid:vc6zix0rlb4UAPbeNA89Lj-->解析清单</button>
+        <span data-page-node-id="EJhC5tEpbNGbICwnHWhfGv" class="hint" id="parseInfo" style="align-self:center"></span>
+      </div>
+      <div data-page-node-id="gWpUDqcfuXeCbxE6g1KLxq" class="btns">
+        <button data-page-node-id="8z13Kq18IKpc4molqPKKK2" class="primary" id="btnRun" onclick="startRun()"><!--pnid:XBHsZ7aqk9B8oIE0qSaBRK-->② 开始批量测距</button>
+        <button data-page-node-id="SbkkgfRFX7FYSDGtT0lm8D" class="ghost" disabled id="btnPause" onclick="togglePause()"><!--pnid:iKgyQLzdpyxjcFBsyqXpb7-->暂停</button>
+        <button data-page-node-id="S4H7QVwHGAggqMPNxf4081" class="ghost" disabled id="btnExport" onclick="exportXlsx()"><!--pnid:jhja3D2bDko00wDFMF5lif-->导出 Excel</button>
+        <button data-page-node-id="0PKeNpeBKV4EsL0izyIX2f" class="ghost" disabled id="btnExportXY" onclick="exportCoordsXlsx()"><!--pnid:l1dSSgrIuwXRQnOLaVqbOr-->导出经纬度明细</button>
+        <button data-page-node-id="GORNKsIO6mJUpXvHrUOLhH" class="ghost" onclick="clearCache()"><!--pnid:ykiCrVWq24BkFPecfO37GD-->清空结果</button>
+      </div>
+      <div data-page-node-id="9E76Hsq6SgkQvkIfbos5Pc" class="bar"><i data-page-node-id="0wWBs0ETMKIW0IVxBJNevP" id="bar"></i></div>
+      <div data-page-node-id="nZUrH6IOiV37TnlQ6kJsPm" class="hint" id="status"><!--pnid:qXRwbE1h60HYqXAEzJpRFQ-->支持断点续跑：中途关页，重新打开点「开始」自动跳过已完成门店。</div>
+    </div>
+  </div>
+
+  <!--pnid:BBigBnewEUFOkJst6CAtPj--><!-- 右列：结果 -->
+  <div data-page-node-id="g4zWXHBIzMIuy4DYTSS7wo">
+    <div data-page-node-id="qfKeC6O4HPRslAHxigGddl" class="stats">
+      <div data-page-node-id="BQ8HfH3kgQ5u4MV3RByLyR" class="stat"><b data-page-node-id="hqHpxuFYiaBzG4HyTqTjQA" id="stTotal"><!--pnid:ncTUAioCOggTJ0eRgzVlQ6-->0</b><span data-page-node-id="stYiVE2QRYtd5aajQM4cZ5"><!--pnid:oqTNhjBhIDh0EYohzR6EvO-->门店总数</span></div>
+      <div data-page-node-id="QuUTjkgMbo5AAuiffs3SzC" class="stat"><b data-page-node-id="gx2fkfaQZlpikuIdHrqJmw" id="stDone"><!--pnid:apQ4IQFg9di2yqjlDiGd1j-->0</b><span data-page-node-id="wJKHY825DhN2cwEJLHEy51"><!--pnid:NjiuTKbHycgse8TY06Tk2Y-->已完成</span></div>
+      <div data-page-node-id="3hYNHwxNE4L7m0D0i6TGqP" class="stat"><b data-page-node-id="AFpUH5p6PNxSx1fWbHUswE" id="stOk"><!--pnid:WIC1MofYUW2q764gYUHCVl-->0</b><span data-page-node-id="EmSW3jhuY2f1BHh1mD7t1Z"><!--pnid:Xb5oLOHsZcsVf9zMraWm2w-->成功</span></div>
+      <div data-page-node-id="upLi5l2dpSXiAvbD3Uglje" class="stat"><b data-page-node-id="gNN2KGbj8d0jfcENx9gHTW" id="stFail"><!--pnid:bbLqVGaQk3unBDjUIKuEhl-->0</b><span data-page-node-id="20ASRKqMp5CJgH3JNuVPmU"><!--pnid:gqEcnfMcPpC6hDxmXwpehx-->失败</span></div>
+      <div data-page-node-id="E6f4bsNZgmL4I7HNffMPNd" class="stat"><b data-page-node-id="lIocszll5SWPDavqxjfwPO" id="stAvg"><!--pnid:iKLJwvXr68lHHMRMIwOtDK-->-</b><span data-page-node-id="hmIXuVI2FoYQM5fdvy5BNh"><!--pnid:9MbnnU3OU7lqeIE1yjtkqB-->平均最短距离(km)</span></div>
+    </div>
+    <div data-page-node-id="98QgMBORU2orbY6oRGRprC" class="tblwrap">
+      <table data-page-node-id="6Ozc0dJb5XpE2E9ziozJHR">
+        <thead data-page-node-id="uYhLNJwN2VFBX4gSlFWFKi"><tr data-page-node-id="w8FF3FTaIiIzigQ1yxO5DH">
+          <th data-page-node-id="PeWspyek6M9wlwkAaGwGlY"><!--pnid:rsS6aI64zRArH0aEOwBgP9-->#</th><th data-page-node-id="u7DHgakPKCNfy0G2B2A5RW"><!--pnid:fN9UlnhpkAWhowxSp942a5-->门店名称</th><th data-page-node-id="Fc2rOGrVHA2YjlmFDj1OSP"><!--pnid:BQApH5JyRlIaEbAvjQ8FQE-->详细地址</th><th data-page-node-id="CW0dQGwLoIlSA1ZEN4HkCF"><!--pnid:6MhimsCTEFm00PnPU5P1CM-->匹配坐标</th><th data-page-node-id="kF9RidxedQ8q771JZMTOKV"><!--pnid:5zg3Jwwq4iKxI8qVSUEQ7i-->最短距离(km)</th><th data-page-node-id="y8KJ7lI9jjaZcc56tm1p3S"><!--pnid:21uMqDCFZbSutX2FsAdAtd-->预计用时</th><th data-page-node-id="QNkSTlJCIbfIuHDeEMgg3w"><!--pnid:pz4H4ktCs09RMjmYUHZj6W-->过路费(元)</th><th data-page-node-id="0TBApDdKsBhT8CApk7HkjD"><!--pnid:XyoV1SPCCSfFl2eqjq7V6G-->三条路线明细</th><th data-page-node-id="jkYmtojKtffutTbePSPksj"><!--pnid:I4AC7vDMqAHKQo086cUidx-->状态</th>
+        </tr></thead>
+        <tbody data-page-node-id="41EcpQWkHleO4QZYTepEo8" id="tbody"></tbody>
+      </table>
+    </div>
+
+    <details data-page-node-id="aDoZaQPwRl9g0sqhoLpKr8">
+      <summary data-page-node-id="YeKiy5IiJDDhlF8ytfBMCK"><!--pnid:sIl9dwWs7ebfK2xbmHHGyt-->使用步骤 / 常见问题</summary>
+      <ol data-page-node-id="zDSleuPUYidrklA2QW0xxl">
+        <li data-page-node-id="y4zUBbkYkHhRXBvrySKQGy"><!--pnid:1mAvGbybWSZn1E2wneHOfK-->注册高德开放平台（个人认证，免费）→ 控制台「应用管理」→ 创建新应用 → 添加 Key，服务平台选 <code data-page-node-id="ssQ9UTjBblS7jjGrDE5MnF" data-pnid-children="WWrkGXH6vot3mEcg6o5Nr2">Web端(JS API)</code><!--pnid:ui0Ha0LecENEfWOU9eQhtl-->，同时记下「安全密钥」。</li>
+        <li data-page-node-id="5btOM29uFsHJsvVr0LEAC7"><!--pnid:XKw6muNjctcJlF37A8qAxC-->把 Key 和安全密钥填到①，仓库地址点「解析仓库坐标」确认定位无误（错一个字都会偏，务必核对）。</li>
+        <li data-page-node-id="yII0nglX7EwzGVVJc5m2hS"><!--pnid:8t0rN7NyJNPISh7sNXzjsw-->粘贴或上传门店清单（<code data-page-node-id="ntnvxjO04sTaU7XyqyjoW2" data-pnid-children="OCakh23KWCBgmtTQK2Pe1B">门店名称,详细地址</code><!--pnid:g7C0pgJOM6THLhtiTs3vuW-->），地址越详细定位越准；只有店名就写 <code data-page-node-id="PokY3VpNfBJ3tj2NKc49XM" data-pnid-children="CP7gdoCG1xny2L379uELox">店名,商丘</code><!--pnid:f6JX1GbnrKgg5gHpMm2223--> 自动按POI匹配。</li>
+        <li data-page-node-id="lzCsfUrBNJiDOPJ2OhTeNv"><!--pnid:q7NJQRxf5NT1rz4SuKePKU-->点「开始批量测距」，完成后导出 Excel。失败行会标注原因，可修复地址后重跑（自动跳过已成功行）。</li>
+        <li data-page-node-id="rx5gzfM2SxfuOHqbny2h4A"><!--pnid:j3Y00mMbuSzKrdvSZ5VLiX-->距离口径：高德货车引擎（与 App 货车导航同源），三条路线取最短，单位公里保留 1 位小数。</li>
+      </ol>
+    </details>
+  </div>
+</main>
+
+<script data-page-node-id="QZzXwIanLYnaA4T16e7geW" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script data-page-node-id="lu7lVOYTWNbNfbJiH40jMw" data-pnid-children="PB0h2n9u8i93JjhPEJYyOr">
+const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const LS_KEY = 'truck_measure_result_v1';
+
+let AMapOK = false, geocoder = null, placeSearch = null, depot = null;
+let rows = [];          // {name, addr, lnglat, best, routes:[{label,distance,time,tolls}], state:'wait|doing|ok|fail', msg}
+let running = false, paused = false;
+
+/* ---------- AMap 加载 ---------- */
+async function loadAMap() {
+  const key = $('key').value.trim(), jscode = $('jscode').value.trim();
+  if (!key) throw new Error('请先填写高德 Key');
+  if (AMapOK) return;
+  if (jscode) window._AMapSecurityConfig = { securityJsCode: jscode };
+  await new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = 'https://webapi.amap.com/maps?v=1.4.15&key=' + encodeURIComponent(key) + '&plugin=AMap.Geocoder,AMap.PlaceSearch';
+    s.onload = res;
+    s.onerror = () => rej(new Error('高德JS加载失败：请检查 Key 是否为「Web端(JS API)」类型'));
+    document.head.appendChild(s);
+  });
+  if (typeof AMap === 'undefined') throw new Error('Key 无效或类型不对：请确认 Key 为「Web端(JS API)」类型且已启用');
+  geocoder = new AMap.Geocoder({ city: '全国', extensions: 'base' });
+  placeSearch = new AMap.PlaceSearch({ city: '商丘', citylimit: false, pagesize: 1 });
+  await ensurePlugin('AMap.TruckDriving');
+  AMapOK = true;
+}
+
+/* 插件双保险：URL 参数未带上时用 AMap.plugin 动态加载 */
+function ensurePlugin(name) {
+  return new Promise((res, rej) => {
+    const tryUse = () => AMap[name] ? res() : rej(new Error(name + ' 插件加载失败，请检查 Key 权限'));
+    if (AMap[name]) return res();
+    try { AMap.plugin(name, tryUse); } catch (e) { rej(new Error(name + ' 插件加载异常：' + e.message)); }
+    setTimeout(() => AMap[name] ? res() : rej(new Error(name + ' 插件加载超时')), 8000);
+  });
+}
+
+/* ---------- 仓库定位 ---------- */
+async function locateDepot() {
+  try {
+    setStatus('正在加载高德服务…');
+    await loadAMap();
+    const addr = $('depot').value.trim();
+    if (!addr) return setStatus('请填写仓库地址', true);
+    let loc = await geocode(addr);
+    let via = '地址解析';
+    if (!loc) { loc = await poi(addr); via = 'POI匹配'; }
+    if (!loc) { $('depotPos').textContent = '❌ 解析失败，请补全地址'; setStatus('仓库解析失败', true); return; }
+    depot = [loc.lng, loc.lat];
+    $('depotPos').textContent = '✅ ' + via + '：' + loc.lng.toFixed(6) + ',' + loc.lat.toFixed(6);
+    setStatus('仓库定位成功，可开始测距');
+  } catch (e) { setStatus(e.message, true); }
+}
+
+function geocode(addr) {
+  return new Promise(res => geocoder.getLocation(addr, (st, r) => {
+    if (st === 'complete' && r.geocodes && r.geocodes.length) res(r.geocodes[0].location); else res(null);
+  }));
+}
+function poi(kw) {
+  return new Promise(res => placeSearch.search(kw, (st, r) => {
+    if (st === 'complete' && r.poiList && r.poiList.pois && r.poiList.pois.length) res(r.poiList.pois[0].location); else res(null);
+  }));
+}
+function truckRoute(origin, dest, policy, cfg) {
+  return new Promise(res => {
+    let t;
+    try {
+      t = new AMap.TruckDriving(Object.assign({
+        policy: policy, extensions: 'base'
+      }, cfg));
+    } catch (e) { return res({ err: 'TruckDriving 构造失败: ' + e.message }); }
+    t.search([{ lnglat: origin }, { lnglat: dest }], (st, r) => {
+      if (st === 'complete' && r.routes && r.routes.length) {
+        const best = r.routes.reduce((a, b) => b.distance < a.distance ? b : a);
+        res({ distance: best.distance, time: best.time, tolls: best.tolls });
+      } else if (st === 'complete') {
+        res({ err: '算路成功但返回0条路线' });
+      } else {
+        const info = (r && r.info) ? r.info : (typeof r === 'string' ? r : st);
+        res({ err: '算路失败[' + st + ']: ' + info });
+      }
+    });
+  });
+}
+
+/* ---------- 清单解析 ---------- */
+function parseText() {
+  const lines = $('shops').value.split('\n').map(s => s.trim()).filter(Boolean);
+  const out = [];
+  for (const line of lines) {
+    if (/^[-—\s]*$/.test(line)) continue;
+    const m = line.split(/[,\t，]/).map(s => s.trim()).filter(Boolean);
+    if (m.length >= 2) out.push({ name: m[0], addr: m.slice(1).join(','), state: 'wait', routes: [] });
+    else out.push({ name: m[0] || line, addr: m[0] || line, state: 'wait', routes: [] });
+  }
+  rows = out;
+  renderAll();
+  $('parseInfo').textContent = '✅ 解析出 ' + out.length + ' 家门店';
+}
+$('file').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = ev => {
+    try {
+      const wb = XLSX.read(ev.target.result, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const json = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+      const out = [];
+      for (let ri = 0; ri < json.length; ri++) {
+        const cells = json[ri].map(c => String(c).trim());
+        if (!cells.some(Boolean)) continue;
+        // 仅跳过标准表头行（第一列=序号 或 含"门店名称"且不含"店,"）
+        const joined = cells.join('|');
+        if (ri === 0 && (/^序号/.test(joined) || /门店名称|店名/.test(joined) && !/店[，,]/.test(joined))) continue;
+        const nameIdx = cells.findIndex((c, i) => i <= 2 && /店|超市|便利店/.test(c));
+        const name = nameIdx >= 0 ? cells[nameIdx] : cells[0];
+        const addr = cells.find((c, i) => i !== cells.indexOf(name) && /路|街|巷|号|镇|乡|村|园|大道|县城|区|州|县/.test(c) && c !== name) || '';
+        out.push({ name, addr, state: 'wait', routes: [] });
+      }
+      rows = out;
+      renderAll();
+      $('parseInfo').textContent = '✅ 读取 ' + out.length + ' 行（表头已自动跳过）';
+    } catch (err) { $('parseInfo').textContent = '❌ 解析失败：' + err.message; }
+  };
+  rd.readAsArrayBuffer(f);
+});
+
+/* ---------- 主流程 ---------- */
+async function startRun() {
+  if (!rows.length) parseText();
+  if (!rows.length) return setStatus('请先解析门店清单', true);
+  if (!$('btnPause').disabled) { paused = false; return; }
+  try { await loadAMap(); } catch (e) { return setStatus(e.message, true); }
+  if (!depot) { locateDepot(); await sleep(1200); }
+  if (!depot) return setStatus('请先成功解析仓库坐标', true);
+
+  // 恢复缓存：跳过已完成
+  const cache = loadCache();
+  if (cache && cache.length === rows.length) rows = cache;
+  else if (cache) console.info('缓存行数不符，忽略');
+
+  const cfg = readCfg();
+  const policies = $('policyMode').value === '1' ? [1] : [1, 2, 3];
+  const labels = { 1: '速度优先', 2: '不走高速', 3: '避免收费' };
+
+  running = true; paused = false;
+  $('btnRun').disabled = true; $('btnPause').disabled = false; $('btnExport').disabled = true;
+
+  const pending = rows.map((r, i) => [r, i]).filter(([r]) => r.state !== 'ok');
+  for (const [row, idx] of pending) {
+    while (paused) await sleep(300);
+    row.state = 'doing'; updateRow(idx); setStatus('正在测距：' + (idx + 1) + '/' + rows.length + ' ' + row.name);
+    try {
+      // 1. 坐标
+      if (!row.lnglat) {
+        let loc = await geocode(row.addr && row.addr !== row.name ? row.addr : row.name + ' ' + row.addr);
+        if (!loc) loc = await poi(row.name);
+        if (!loc) { row.state = 'fail'; row.msg = '地址定位失败，请补全详细地址'; updateRow(idx); saveCache(); continue; }
+        row.lnglat = [loc.lng, loc.lat];
+      }
+      // 2. 多策略取最短
+      row.routes = []; const errs = [];
+      for (const p of policies) {
+        const r = await truckRoute(depot, row.lnglat, p, cfg);
+        if (r && r.err) errs.push(labels[p] + r.err);
+        else if (r) row.routes.push(Object.assign({ label: labels[p] }, r));
+        await sleep(360); // QPS 限速
+      }
+      if (!row.routes.length) { row.state = 'fail'; row.msg = errs.join('；') || '货车路线规划失败'; }
+      else {
+        row.best = row.routes.reduce((a, b) => b.distance < a.distance ? b : a);
+        row.state = 'ok'; row.msg = '';
+      }
+    } catch (e) { row.state = 'fail'; row.msg = e.message; }
+    updateRow(idx); saveCache(); refreshStats();
+  }
+  running = false;
+  $('btnRun').disabled = false; $('btnPause').disabled = true;
+  $('btnExport').disabled = !rows.some(r => r.state === 'ok');
+  setStatus('✅ 全部完成！可点击「导出 Excel」保存结果');
+}
+
+function readCfg() {
+  return {
+    size: +$('size').value,
+    width: +$('width').value || 2.5,
+    height: +$('height').value || 3,
+    load: +$('load').value || 10
+  };
+}
+
+/* ---------- 渲染 ---------- */
+function fmt(m) { return (m / 1000).toFixed(1); }
+function fmtT(s) { const h = Math.floor(s / 3600), m = Math.round(s % 3600 / 60); return h ? h + 'h' + m + 'm' : m + '分钟'; }
+function updateRow(i) {
+  const tb = $('tbody'); let tr = tb.children[i];
+  if (!tr) { tr = document.createElement('tr'); tb.appendChild(tr); }
+  const r = rows[i];
+  const st = { wait: '<span class="hint">待测</span>', doing: '<span class="doing">测距中…</span>', ok: '<span class="ok">✓ 成功</span>', fail: '<span class="bad" title="' + (r.msg || '') + '">✗ 失败</span>' }[r.state];
+  tr.innerHTML =
+    '<td>' + (i + 1) + '</td>' +
+    '<td>' + esc(r.name) + '</td>' +
+    '<td style="max-width:220px">' + esc(r.addr) + '</td>' +
+    '<td>' + (r.lnglat ? r.lnglat[0].toFixed(5) + ',' + r.lnglat[1].toFixed(5) : '-') + '</td>' +
+    '<td>' + (r.best ? '<b style="color:var(--brand-deep)">' + fmt(r.best.distance) + '</b>' : '-') + '</td>' +
+    '<td>' + (r.best ? fmtT(r.best.time) : '-') + '</td>' +
+    '<td>' + (r.best ? (r.best.tolls || 0) : '-') + '</td>' +
+    '<td style="max-width:260px;font-size:11.5px;color:var(--muted)">' + (r.routes && r.routes.length ? r.routes.map(x => x.label + ' ' + fmt(x.distance) + 'km/' + fmtT(x.time)).join('<br>') : (r.msg ? '<span class="bad" style="font-weight:400">' + esc(r.msg) + '</span>' : '')) + '</td>' +
+    '<td>' + st + '</td>';
+}
+function renderAll() {
+  $('tbody').innerHTML = '';
+  rows.forEach((_, i) => updateRow(i));
+  refreshStats();
+  const has = rows.length > 0;
+  $('btnExportXY').disabled = !has;
+}
+function refreshStats() {
+  const total = rows.length, ok = rows.filter(r => r.state === 'ok'), fail = rows.filter(r => r.state === 'fail');
+  $('stTotal').textContent = total;
+  $('stDone').textContent = ok.length + fail.length;
+  $('stOk').textContent = ok.length;
+  $('stFail').textContent = fail.length;
+  $('stAvg').textContent = ok.length ? (ok.reduce((s, r) => s + r.best.distance, 0) / ok.length / 1000).toFixed(1) : '-';
+  const done = ok.length + fail.length;
+  $('bar').style.width = (total ? done / total * 100 : 0) + '%';
+}
+function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+function setStatus(t, bad) { const el = $('status'); el.textContent = t; el.style.color = bad ? 'var(--bad)' : 'var(--muted)'; }
+function togglePause() { paused = !paused; $('btnPause').textContent = paused ? '继续' : '暂停'; }
+
+/* ---------- 缓存 / 导出 ---------- */
+function saveCache() { try { localStorage.setItem(LS_KEY, JSON.stringify(rows)); } catch (e) {} }
+function loadCache() { try { const s = localStorage.getItem(LS_KEY); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+function clearCache() { localStorage.removeItem(LS_KEY); rows = []; renderAll(); $('parseInfo').textContent = ''; setStatus('已清空结果缓存'); $('btnExport').disabled = true; }
+(function restore() {
+  const c = loadCache();
+  if (c && c.length) { rows = c; renderAll(); $('btnExport').disabled = false; setStatus('已恢复上次进度（' + c.filter(r => r.state === 'ok').length + '/' + c.length + ' 完成），点「开始」继续或「清空结果」重来'); }
+})();
+
+function exportXlsx() {
+  const data = rows.map((r, i) => ({
+    '序号': i + 1,
+    '门店名称': r.name,
+    '详细地址': r.addr,
+    '门店坐标': r.lnglat ? r.lnglat.map(x => x.toFixed(6)).join(',') : '',
+    '仓库→门店最短距离(km)': r.best ? +(fmt(r.best.distance)) : '',
+    '预计用时': r.best ? fmtT(r.best.time) : '',
+    '过路费(元)': r.best ? (r.best.tolls || 0) : '',
+    '三条路线明细': r.routes ? r.routes.map(x => x.label + ' ' + fmt(x.distance) + 'km/' + fmtT(x.time)).join('；') : '',
+    '状态': r.state === 'ok' ? '成功' : '失败',
+    '失败原因': r.msg || ''
+  }));
+  const ws = XLSX.utils.json_to_sheet(data);
+  ws['!cols'] = [{ wch: 5 }, { wch: 26 }, { wch: 38 }, { wch: 22 }, { wch: 12 }, { wch: 10 }, { wch: 9 }, { wch: 48 }, { wch: 7 }, { wch: 26 }];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, '货车最短距离');
+  const d = new Date(), ds = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  XLSX.writeFile(wb, '商丘仓_门店货车最短距离_' + ds + '.xlsx');
+}
+
+/* 导出经纬度明细（含未完成测距的行，只要有解析坐标即导出） */
+function exportCoordsXlsx() {
+  if (!rows.length) return setStatus('暂无数据，请先解析门店清单', true);
+  const data = rows.map((r, i) => ({
+    '序号': i + 1,
+    '门店名称': r.name,
+    '详细地址': r.addr,
+    '经度': r.lnglat ? +r.lnglat[0].toFixed(6) : '',
+    '纬度': r.lnglat ? +r.lnglat[1].toFixed(6) : '',
+    '坐标(合并)': r.lnglat ? r.lnglat.map(x => x.toFixed(6)).join(',') : '',
+    '定位状态': r.lnglat ? '已定位' : '未定位',
+    '测距状态': r.state === 'ok' ? '成功' : (r.state === 'fail' ? '失败' : '未测'),
+    '最短距离(km)': r.best ? +(fmt(r.best.distance)) : ''
+  }));
+  const ws = XLSX.utils.json_to_sheet(data);
+  ws['!cols'] = [{ wch: 5 }, { wch: 26 }, { wch: 38 }, { wch: 12 }, { wch: 12 }, { wch: 22 }, { wch: 9 }, { wch: 9 }, { wch: 12 }];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, '门店经纬度明细');
+  const d = new Date(), ds = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  XLSX.writeFile(wb, '商丘仓_门店经纬度明细_' + ds + '.xlsx');
+}
+</script>
+</body>
+</html>

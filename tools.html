@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>工具库 · Gregory</title>
 <meta name="description" content="Gregory 内部工具库——配送运营、制度规范、流程通知与交接沉淀的可用工具集合。">
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <style>
   :root{
     --brand:#FF6B35;
@@ -24,6 +26,25 @@
   }
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
 
+  /* ---------- 签名品牌标识 ---------- */
+  .brand{
+    display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  }
+  .brand-mark{
+    width:30px;height:30px;border-radius:9px;flex:none;
+    background:linear-gradient(135deg,var(--brand-dark),var(--brand));
+    color:#fff;font-family:Georgia,"Times New Roman",serif;
+    font-style:italic;font-weight:700;font-size:19px;line-height:30px;text-align:center;
+    transform:rotate(-6deg);
+    box-shadow:0 3px 10px rgba(217,72,15,.30);
+  }
+  .brand-name{
+    font-family:"Dancing Script","Segoe Script","Brush Script MT",cursive;
+    font-size:23px;font-weight:700;letter-spacing:.4px;
+    color:var(--ink);transition:color .2s ease;
+  }
+  .brand:hover .brand-name{color:var(--brand-dark);}
+
   /* ---------- 顶部 ---------- */
   .topbar{
     display:flex;align-items:center;justify-content:space-between;
@@ -36,9 +57,6 @@
   }
   .back:hover{color:var(--brand-dark);}
   .back span{font-size:15px;line-height:1;}
-  .mark{
-    font-size:12px;letter-spacing:.22em;color:var(--ink-3);text-transform:uppercase;
-  }
 
   /* ---------- Hero ---------- */
   .hero{
@@ -134,6 +152,8 @@
     .grid{grid-template-columns:1fr;}
     .hero h1{font-size:32px;}
     .foot{flex-direction:column;gap:10px;}
+    .brand-mark{width:26px;height:26px;font-size:16px;line-height:26px;border-radius:8px;}
+    .brand-name{font-size:19px;}
   }
 </style>
 </head>
@@ -142,8 +162,11 @@
 <div class="wrap">
 
   <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">G</span>
+      <span class="brand-name">Gregory's tools</span>
+    </a>
     <a class="back" href="index.html"><span>←</span> 返回封面</a>
-    <div class="mark">Internal Tools</div>
   </div>
 
   <header class="hero">

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="title_tools">工具库 · Gregory</title>
-<meta name="description" content="Gregory 内部工具库——配送运营、制度规范、流程通知与交接沉淀的可用工具集合。">
+<meta name="description" content="Gregory 内部工具库——自研网页工具、带板运输、承运商考核、仓库作业标准、TMS 操作手册与门店签收资料。">
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <script>
@@ -56,9 +56,7 @@
   #fx{position:fixed;inset:0;pointer-events:none;z-index:99;}
 
   /* ---------- 签名品牌标识 ---------- */
-  .brand{
-    display:inline-flex;align-items:center;gap:10px;text-decoration:none;
-  }
+  .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;}
   .brand-mark{
     width:30px;height:30px;border-radius:9px;flex:none;
     background:linear-gradient(135deg,var(--brand-dark),var(--brand));
@@ -89,12 +87,19 @@
   .back span{font-size:15px;line-height:1;}
 
   /* ---------- Hero ---------- */
-  .hero{padding:56px 0 40px;}
-  .hero h1{
-    font-size:clamp(30px,4.6vw,44px);font-weight:800;letter-spacing:-.5px;line-height:1.2;
+  .hero{padding:56px 0 36px;}
+  .hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:800;letter-spacing:-.5px;line-height:1.2;}
+  .hero p{margin-top:12px;font-size:14.5px;color:var(--ink-2);max-width:620px;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+  .stat{
+    display:inline-flex;align-items:baseline;gap:7px;
+    border:1px solid var(--line);border-radius:12px;background:var(--card);
+    padding:10px 16px;font-size:12.5px;color:var(--ink-3);
   }
-  .hero p{
-    margin-top:12px;font-size:14.5px;color:var(--ink-2);max-width:560px;
+  .stat b{font-size:19px;font-weight:800;color:var(--brand-dark);font-variant-numeric:tabular-nums;}
+  .note{
+    margin-top:16px;font-size:12.5px;color:var(--ink-3);
+    border-left:2px solid var(--brand);padding-left:10px;max-width:620px;
   }
 
   /* ---------- 分区导航 ---------- */
@@ -114,69 +119,70 @@
   .nav a:hover{color:var(--ink);border-color:var(--brand);}
 
   /* ---------- 分区 ---------- */
-  .section{padding:64px 0 8px;scroll-margin-top:64px;}
-  .sec-head{display:flex;align-items:baseline;gap:18px;padding-bottom:22px;border-bottom:1px solid var(--line);}
-  .sec-no{
-    font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--brand-dark);
-    font-variant-numeric:tabular-nums;flex:none;
-  }
+  .section{padding:60px 0 8px;scroll-margin-top:64px;}
+  .sec-head{display:flex;align-items:baseline;gap:18px;padding-bottom:22px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .sec-no{font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--brand-dark);font-variant-numeric:tabular-nums;flex:none;}
   .sec-head h2{font-size:22px;font-weight:700;letter-spacing:-.2px;}
   .sec-count{
     margin-left:auto;flex:none;font-size:12px;color:var(--ink-3);
     border:1px solid var(--line);border-radius:999px;padding:2px 10px;
     font-variant-numeric:tabular-nums;
   }
-  .sec-desc{font-size:13px;color:var(--ink-3);text-align:right;flex:none;}
+  .sec-desc{font-size:13px;color:var(--ink-3);flex:none;}
 
   /* ---------- 卡片 ---------- */
-  .grid{
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-    gap:18px;padding-top:28px;
-  }
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding-top:28px;}
   .card{
     background:var(--card);border:1px solid var(--line);border-radius:14px;
-    padding:24px 24px 22px;display:flex;flex-direction:column;
+    padding:24px 24px 20px;display:flex;flex-direction:column;
     transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
   }
-  .card:hover{
-    border-color:#F5C4AC;box-shadow:0 10px 28px rgba(217,72,15,.08);transform:translateY(-2px);
-  }
+  .card:hover{border-color:#F5C4AC;box-shadow:0 10px 28px rgba(217,72,15,.08);transform:translateY(-2px);}
   .card-tag{
     align-self:flex-start;font-size:11px;letter-spacing:.08em;
     color:var(--brand-dark);background:var(--brand-soft);border-radius:5px;
     padding:3px 9px;margin-bottom:14px;
   }
-  .card h3{font-size:17px;font-weight:700;letter-spacing:-.1px;line-height:1.4;}
+  .card h3{font-size:16.5px;font-weight:700;letter-spacing:-.1px;line-height:1.45;}
   .card .lead{margin-top:9px;font-size:13.5px;color:var(--ink-2);}
 
-  .field{margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft);font-size:13px;}
-  .field dt{color:var(--ink-3);font-size:11.5px;letter-spacing:.06em;margin-bottom:4px;}
+  .field{margin-top:16px;padding-top:13px;border-top:1px solid var(--line-soft);font-size:13px;}
+  .field dt{color:var(--ink-3);font-size:11.5px;letter-spacing:.06em;margin-bottom:5px;}
   .field dd{color:var(--ink-2);}
-
-  /* 待接入占位态 */
-  .card.pending{
-    border-style:dashed;border-color:var(--pending-line);background:transparent;
+  .field dd ul{list-style:none;}
+  .field dd li{position:relative;padding-left:13px;margin-bottom:3px;}
+  .field dd li::before{
+    content:"";position:absolute;left:0;top:9px;width:4px;height:4px;border-radius:50%;
+    background:var(--brand);
   }
-  .card.pending .card-tag{color:var(--ink-3);background:var(--line-soft);}
-  .card.pending h3{color:var(--ink-3);font-weight:600;}
-  .card.pending .lead{color:var(--ink-3);}
+  .card-foot{
+    margin-top:auto;padding-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  }
+  .card-link{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:13px;font-weight:600;color:var(--brand-dark);text-decoration:none;
+    border:1px solid var(--brand);border-radius:999px;padding:6px 15px;
+    transition:background .18s ease,color .18s ease;
+  }
+  .card-link:hover{background:var(--brand);color:#fff;}
+  .card-meta{font-size:11.5px;color:var(--ink-3);letter-spacing:.03em;}
 
   /* ---------- 页脚 ---------- */
   .foot{
-    margin-top:88px;border-top:1px solid var(--line);
+    margin-top:80px;border-top:1px solid var(--line);
     padding:30px 0 56px;display:flex;justify-content:space-between;align-items:center;gap:24px;
-    font-size:12.5px;color:var(--ink-3);
+    font-size:12.5px;color:var(--ink-3);flex-wrap:wrap;
   }
   .foot b{color:var(--ink-2);font-weight:600;}
 
   @media(max-width:860px){
-    .hero{padding:40px 0 32px;}
+    .hero{padding:40px 0 28px;}
     .sec-desc{display:none;}
   }
   @media(max-width:600px){
     .wrap{padding:0 20px;}
     .grid{grid-template-columns:1fr;}
-    .foot{flex-direction:column;gap:14px;}
+    .foot{flex-direction:column;gap:14px;align-items:flex-start;}
     .brand-mark{width:26px;height:26px;font-size:16px;line-height:26px;border-radius:8px;}
     .brand-name{font-size:19px;}
   }
@@ -202,148 +208,1010 @@
   <header class="hero">
     <h1 data-i18n="tools_h1">工具库</h1>
     <p data-i18n="tools_sub">从仓配配送现场做出来、能直接交给别人用的东西——每项都写清楚解决什么问题、怎么用、需要什么前提。</p>
+    <div class="stats">
+      <span class="stat"><b>44</b><span data-i18n="stat_all">项资料</span></span>
+      <span class="stat"><b>6</b><span data-i18n="stat_tools">个在线工具</span></span>
+      <span class="stat"><b>38</b><span data-i18n="stat_docs">份制度与手册</span></span>
+    </div>
+    <div class="note" data-i18n="note_zh">卡片介绍为中文（内部资料原文）。标注「打开工具」的卡片是可直接使用的网页应用；其余为制度 / 手册 / 表格文档，原始文件在本地「桌面 / 学习文件」目录。</div>
   </header>
 
 </div>
 
 <nav class="nav">
   <div class="wrap" style="display:flex;gap:26px;">
-    <a href="#s1" data-i18n="s1">数据与看板</a>
-    <a href="#s2" data-i18n="s2">制度与规范</a>
-    <a href="#s3" data-i18n="s3">流程与通知</a>
-    <a href="#s4" data-i18n="s4">交接与沉淀</a>
+    <a href="#s1" data-i18n="s1">自研工具</a>
+    <a href="#s2" data-i18n="s2">带板运输</a>
+    <a href="#s3" data-i18n="s3">承运商考核与结算</a>
+    <a href="#s4" data-i18n="s4">仓库作业标准</a>
+    <a href="#s5" data-i18n="s5">调度与切仓</a>
+    <a href="#s6" data-i18n="s6">TMS 系统操作</a>
+    <a href="#s7" data-i18n="s7">门店与电子签收</a>
+    <a href="#s8" data-i18n="s8">司机端</a>
   </div>
 </nav>
 
 <div class="wrap">
 
-  <!-- 01 -->
+  <!-- 01 自研工具 -->
   <section class="section" id="s1">
     <div class="sec-head">
       <div class="sec-no">01</div>
-      <h2 data-i18n="s1">数据与看板</h2>
+      <h2 data-i18n="s1">自研工具</h2>
       <div class="sec-count"></div>
-      <div class="sec-desc" data-i18n="s1d">把散在各系统的数据，变成能直接看的结论</div>
+      <div class="sec-desc" data-i18n="s1d">网页应用，点开即用</div>
     </div>
     <div class="grid">
 
-      <article class="card pending">
-        <div class="card-tag" data-i18n="card_pending">待接入</div>
-        <h3 data-i18n="card_name">工具名称待填</h3>
-        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_tool">自研工具</div>
+        <h3>商丘仓批量货车测距工具</h3>
+        <p class="lead">批量算出商丘仓到每家门店的货车最短距离，口径与手机导航对齐，切仓算距不用一家家查。</p>
         <dl class="field">
-          <dt data-i18n="card_q">解决什么问题</dt>
-          <dd>—</dd>
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>高德货车算路，自动避开限重限高限行</li>
+              <li>粘贴清单或上传 Excel，三条路线取最短</li>
+              <li>结果含距离 / 用时 / 过路费，可导出 Excel</li>
+              <li>断点续跑：中断后重开自动跳过已完成门店</li>
+            </ul>
+          </dd>
         </dl>
+        <div class="card-foot">
+          <a class="card-link" href="apps/truck-distance.html" target="_blank" rel="noopener"><span data-i18n="open_tool">打开工具</span> ↗</a>
+          <span class="card-meta">网页工具 · 32 KB · 高德 Key 自配</span>
+        </div>
       </article>
 
-      <article class="card pending">
-        <div class="card-tag" data-i18n="card_pending">待接入</div>
-        <h3 data-i18n="card_name">工具名称待填</h3>
-        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_tool">自研工具</div>
+        <h3>很忙配送 APP · 手机保活设置指引</h3>
+        <p class="lead">按机型一步步设置定位与后台保活，专治定位漂移、轨迹断点、后台被杀。</p>
         <dl class="field">
-          <dt data-i18n="card_q">解决什么问题</dt>
-          <dd>—</dd>
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>9 大品牌分机型设置路径，配截图对照</li>
+              <li>筛选：只看定位 / 只看后台 / 安卓 / iOS</li>
+              <li>通用兜底五步 + 设置完成自检清单</li>
+              <li>支持搜索机型、一键复制设置路径</li>
+            </ul>
+          </dd>
         </dl>
+        <div class="card-foot">
+          <a class="card-link" href="apps/phone-settings.html" target="_blank" rel="noopener"><span data-i18n="open_tool">打开工具</span> ↗</a>
+          <span class="card-meta">网页工具 · 2.7 MB · 司机端下发</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_tool">自研工具</div>
+        <h3>调拨托运单生成器</h3>
+        <p class="lead">填好调拨信息和商品明细，实时生成可打印的物流调拨托运单，手写单退场。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>单据信息 + 商品明细逐行录入，自动合计</li>
+              <li>右侧实时预览，含签收人手签栏</li>
+              <li>单号自动生成（CTR + 日期 + 序号）</li>
+              <li>打印 / 存 PDF / 导出单据 HTML，本地暂存</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <a class="card-link" href="apps/transfer-note.html" target="_blank" rel="noopener"><span data-i18n="open_tool">打开工具</span> ↗</a>
+          <span class="card-meta">网页工具 · 140 KB · 纯本地不上传</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_tool">自研工具</div>
+        <h3>承运商发运进度监控看板 V2</h3>
+        <p class="lead">上传 TMS 导出表，按总部考核口径自动重算承运商发运 / 运抵 / 签收及时率。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>核心 KPI + 承运商考核方块 + 新店监控表</li>
+              <li>新店 09:00 判定标准可自行配置</li>
+              <li>异常超时明细、SVG 时段进度图</li>
+              <li>一键生成「群发通报版」文案并复制</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <a class="card-link" href="apps/shipment-monitor.html" target="_blank" rel="noopener"><span data-i18n="open_tool">打开工具</span> ↗</a>
+          <span class="card-meta">网页工具 · 293 KB · 数据为 TMS 真实导出</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_tool">自研工具</div>
+        <h3>鸣鸣很忙 KPI 考核平台</h3>
+        <p class="lead">配送条线 6 项指标加权计分看板，日 / 周 / 月维度一屏总览。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>综合展示 + 运抵 / 签收 / 带板 / 固定车 / 客诉 / 稽核六页签</li>
+              <li>导入 CSV / XLSX 明细自动重算得分</li>
+              <li>导出 CSV 明细、导出为照片（PNG）</li>
+              <li>编辑模式：卡片拖拽排序、增删模块</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <a class="card-link" href="apps/kpi-board.html" target="_blank" rel="noopener"><span data-i18n="open_tool">打开工具</span> ↗</a>
+          <span class="card-meta">网页工具 · 2.9 MB · 计分权重内置</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_tool">自研工具</div>
+        <h3>Gregory's tools · 全能文件工具箱</h3>
+        <p class="lead">77 个文件处理工具，全部在浏览器本地完成，文件不上传，永久免费。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>PDF：合并 / 拆分 / 水印 / 加密 / OCR / 转 Word</li>
+              <li>图像、音视频、GIF 转换与压缩</li>
+              <li>二维码生成与样式美化</li>
+              <li>⌘K 搜索直达，单文件与批量处理</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <a class="card-link" href="apps/pdf-tools.html" target="_blank" rel="noopener"><span data-i18n="open_tool">打开工具</span> ↗</a>
+          <span class="card-meta">网页工具 · 5.7 MB · 纯本地 · 离线可用</span>
+        </div>
       </article>
 
     </div>
   </section>
 
-  <!-- 02 -->
+  <!-- 02 带板运输 -->
   <section class="section" id="s2">
     <div class="sec-head">
       <div class="sec-no">02</div>
-      <h2 data-i18n="s2">制度与规范</h2>
+      <h2 data-i18n="s2">带板运输</h2>
       <div class="sec-count"></div>
-      <div class="sec-desc" data-i18n="s2d">把口头约定，固化成谁都能照做的标准</div>
+      <div class="sec-desc" data-i18n="s2d">从码托、缠膜到托盘回收的完整标准</div>
     </div>
     <div class="grid">
 
-      <article class="card pending">
-        <div class="card-tag" data-i18n="card_pending">待接入</div>
-        <h3 data-i18n="card_name">工具名称待填</h3>
-        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_training">培训手册</div>
+        <h3>带板运输操作手册 V3.0（培训材料）</h3>
+        <p class="lead">带板 V3.0 新标准培训课件，仓库、承运商、门店收货三方一次讲清。</p>
         <dl class="field">
-          <dt data-i18n="card_q">解决什么问题</dt>
-          <dd>—</dd>
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>V3.0 核心变化：统一贴托盘码、监督缠膜质量</li>
+              <li>合托三原则（重下轻上 / 大下小上 / 重心居中）与四条红线</li>
+              <li>分品类缠膜标准（≥20μm 膜、重叠 10cm 等）</li>
+              <li>托盘归还确认四步、司机→仓端双轨台账</li>
+              <li>责任划分表 + 数字速记页</li>
+            </ul>
+          </dd>
         </dl>
+        <div class="card-foot">
+          <span class="card-meta">PPTX · 13.6 MB · 流程标准组 & 配送运营组 · 2026.10</span>
+        </div>
       </article>
 
-      <article class="card pending">
-        <div class="card-tag" data-i18n="card_pending">待接入</div>
-        <h3 data-i18n="card_name">工具名称待填</h3>
-        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_std">标准流程</div>
+        <h3>【标准流程】带板运输操作一页纸</h3>
+        <p class="lead">一页纸速查带板运输全流程，关键数字和拆膜口诀都浓缩在这一页。</p>
         <dl class="field">
-          <dt data-i18n="card_q">解决什么问题</dt>
-          <dd>—</dd>
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>仓库出库 → 承运商配送 → 门店收货 → 空托盘回收四段流程</li>
+              <li>关键数字速记：≥20μm 膜、堆码 ≤2m、边缘 5cm、120 元/托</li>
+              <li>分品类缠膜标准（水饮 4 结 / 面包 3 结）</li>
+              <li>拆膜口诀：从上往下划一刀，搬完一层再一刀</li>
+            </ul>
+          </dd>
         </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 0.9 MB · V3.0 · 2026.10.21 生效</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_notice">正式通知</div>
+        <h3>关于门店带板运输交接规范的通知</h3>
+        <p class="lead">门店带板交接验收的正式规范：托盘 1:1 置换、监控下作业、超时有代价。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>适用范围与「企微申请 + 分仓审核」流程</li>
+              <li>托盘最低申购 6 块，业务保证金冻结作押金</li>
+              <li>按 20 件 / 跺拆托验收，严禁跨托盘混拆</li>
+              <li>到店 2 小时内电子签收，一月超时 3 次取消带板</li>
+              <li>异常 24 小时内上报闭环，破损须监控下拍摄</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 0.2 MB · 红头通知 · 2025.07</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>TMS 带板运输托盘管理操作手册</h3>
+        <p class="lead">教调度员和仓配专员在 TMS 里管好托盘库存，带出 / 归还 / 差异三单闭环。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>司机装车节点填带出板数并拍照上传</li>
+              <li>门店扫码填接收板数、归还板数，自动生成归还单</li>
+              <li>仓库端审核带出单 / 归还单，差异单自动修正库存</li>
+              <li>启用前必须沟通门店盘点并导入期初库存</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 9.5 MB · MMHM-001 · 2025.10</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>TMS-合托操作手册</h3>
+        <p class="lead">仓库人员用 PDA 做合托，减少托盘占用、提高集货位使用率。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>整托合并 / 半托合并分步操作（各 6 步）</li>
+              <li>顺序：先扫合托码 → 再扫被合托码 → 再扫商品 69 码</li>
+              <li>同一门店才能合托，托盘码不得混用</li>
+              <li>实操示例：半托合并只扫两箱纯牛奶 69 码</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PPTX · 33.6 MB · 2025.04</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>司机小程序扫码装车操作手册</h3>
+        <p class="lead">司机扫托盘码完成带板装车的标准动作，一页一步照着做。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>扫托盘码 → 输入装车件数 → 全部扫完提交</li>
+              <li>已扫托盘码显示红色，整托剩货勾选去剩货</li>
+              <li>赵一鸣司机专用（ZYM-001）</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 3.5 MB · 数字化中心 · 2025.01</span>
+        </div>
       </article>
 
     </div>
   </section>
 
-  <!-- 03 -->
+  <!-- 03 承运商考核与结算 -->
   <section class="section" id="s3">
     <div class="sec-head">
       <div class="sec-no">03</div>
-      <h2 data-i18n="s3">流程与通知</h2>
+      <h2 data-i18n="s3">承运商考核与结算</h2>
       <div class="sec-count"></div>
-      <div class="sec-desc" data-i18n="s3d">重复发生的事，不再每次从零写一遍</div>
+      <div class="sec-desc" data-i18n="s3d">打分、扣罚、对账、开票的规则依据</div>
     </div>
     <div class="grid">
 
-      <article class="card pending">
-        <div class="card-tag" data-i18n="card_pending">待接入</div>
-        <h3 data-i18n="card_name">工具名称待填</h3>
-        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_rule">考核规则</div>
+        <h3>承运商服务运作标准及行为规范考核细则</h3>
+        <p class="lead">对承运商按月 KPI 考核打分、扣分罚款的规则依据，约 238 行条款。</p>
         <dl class="field">
-          <dt data-i18n="card_q">解决什么问题</dt>
-          <dd>—</dd>
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>安全 / 服务 / 运力保障 / 标准执行 / 带板管理五大类扣分项</li>
+              <li>固定车沉淀率目标 95%，含加分项</li>
+              <li>KPI 分档奖惩：优秀奖 5000 元至罚 8000 元</li>
+              <li>异常报备免考核口径（晚点 / 超时 / 剩货）</li>
+            </ul>
+          </dd>
         </dl>
+        <div class="card-foot">
+          <span class="card-meta">XLSX · 31 KB · 1007 版</span>
+        </div>
       </article>
 
-      <article class="card pending">
-        <div class="card-tag" data-i18n="card_pending">待接入</div>
-        <h3 data-i18n="card_name">工具名称待填</h3>
-        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_course">宣导课件</div>
+        <h3>KPI 考核 & 异常指标剔除宣导课件（8 月 7 日）</h3>
+        <p class="lead">讲清 8 月 KPI 考核调整和异常指标剔除规则，考核公平性的操作依据。</p>
         <dl class="field">
-          <dt data-i18n="card_q">解决什么问题</dt>
-          <dd>—</dd>
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>及时率目标上调 5%，配货时效剔除半小时空闲</li>
+              <li>剔除三原则：可控性 / 客观性 / 透明性</li>
+              <li>四类剔除场景：不可抗力 / 系统异常 / 数据异常 / 爆单</li>
+              <li>报备 → 申请 → 审核 → 归档流程与时限</li>
+            </ul>
+          </dd>
         </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 2.9 MB · 质控管理部 · 2025.08</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_tpl">函件模板</div>
+        <h3>承运商整改通知函</h3>
+        <p class="lead">承运商月度 KPI 不合格后下发的整改通知函模板，留空待填直接可用。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>依据《配送服务合同》附件 KPI 考核规则</li>
+              <li>整改方案提交期限与整改实施期限条款</li>
+              <li>连续两月不合格 / 单月调整档的解约提示</li>
+              <li>3 个工作日内可书面反馈异议</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOC · 0.1 MB · 湖南鸣鸣很忙</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_flow">流程指引</div>
+        <h3>承运商份额调整申请流程操作指引</h3>
+        <p class="lead">切线调份额的申请审批流程，红线是先审批后执行。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>沟通确认 → 车辆人员确认 → BPM 发起 → 审批 → 执行</li>
+              <li>填写五要素：为什么切 / 切多少 / 切给谁 / 何时切 / 结果</li>
+              <li>附件：调整前后门店占比 + 门店明细清单</li>
+              <li>正常调整建议每月 10-25 日执行</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 0.2 MB · 规划运营部 · 2026.09</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_table">表格模板</div>
+        <h3>承运商运费结算重要节点</h3>
+        <p class="lead">每月运费结算各环节的责任人与截止时间，按节点闭环不踩线。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>25 号前维护新店拣货周期</li>
+              <li>1 号生成沉淀率及月度考评、抽取应付账单</li>
+              <li>2 号 17:00 前承运商在线对账确认</li>
+              <li>3-7 号中台审核 → 8-9 号审批 → 10-14 号财务审核</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">XLSX · 12 KB · 1.22 版</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>计费操作手册及计费流程</h3>
+        <p class="lead">TMS 运费计费、对账、付款全流程操作，仓调度与财务各环节对照。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>生成账单：当月运费抽取 + 手工账单导入</li>
+              <li>发布对账：三方凭证核对后提交审核</li>
+              <li>自动生成 BPM 付款申请</li>
+              <li>承运商在线对账与差异处理</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 3.0 MB · 1.22 版</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_check">材料清单</div>
+        <h3>财务审核运费材料</h3>
+        <p class="lead">财务审核运费要交的 7 项材料清单，一次备齐不退件。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>发票、最终奖励收据、线下账单</li>
+              <li>承运商盖章版账单与考核</li>
+              <li>合同关键页（服务范围 / 费率 / 奖惩条款）</li>
+              <li>附加费用通知文件</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 2.7 MB · 1.22 版</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_flow">流程指引</div>
+        <h3>干线调拨 · 快递 & 零担开票指引</h3>
+        <p class="lead">调拨垫付快递零担运费的开票操作，一页看懂，避开普票和邮箱两个坑。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>必须开电子专票，禁止普票</li>
+              <li>开票信息完整复制，不可简写</li>
+              <li>接收邮箱填承运商指定邮箱，勿填个人邮箱</li>
+              <li>票面核对：应税项目一般为收派 / 物流辅助服务费</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 0.3 MB · 2025.10.01 起</span>
+        </div>
       </article>
 
     </div>
   </section>
 
-  <!-- 04 -->
+  <!-- 04 仓库作业标准 -->
   <section class="section" id="s4">
     <div class="sec-head">
       <div class="sec-no">04</div>
-      <h2 data-i18n="s4">交接与沉淀</h2>
+      <h2 data-i18n="s4">仓库作业标准</h2>
       <div class="sec-count"></div>
-      <div class="sec-desc" data-i18n="s4d">人走了，东西还在</div>
+      <div class="sec-desc" data-i18n="s4d">收货、拆零的硬标准，含修订记录</div>
     </div>
     <div class="grid">
 
-      <article class="card pending">
-        <div class="card-tag" data-i18n="card_pending">待接入</div>
-        <h3 data-i18n="card_name">工具名称待填</h3>
-        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_std">作业标准</div>
+        <h3>MMHM 仓库收货作业标准（0929）</h3>
+        <p class="lead">收货作业全流程标准，17 页制度文件，收货员 / 装卸 / 质检 / 订单部各就各位。</p>
         <dl class="field">
-          <dt data-i18n="card_q">解决什么问题</dt>
-          <dd>—</dd>
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>准确性 / 及时性 / 可追溯三原则</li>
+              <li>签收 6 要素、单据差异与多货处理细则</li>
+              <li>允收期比例表 + 批次倒挂 7 天规则</li>
+              <li>到货温度、外箱变形破损的判定标准</li>
+              <li>绑带缠膜标准 + 收货安全 8 条</li>
+            </ul>
+          </dd>
         </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 1.4 MB · V1.3 · 2026.09.29</span>
+        </div>
       </article>
 
-      <article class="card pending">
-        <div class="card-tag" data-i18n="card_pending">待接入</div>
-        <h3 data-i18n="card_name">工具名称待填</h3>
-        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_std">作业标准</div>
+        <h3>仓库收货作业标准（9.29 修订）含修订说明</h3>
+        <p class="lead">同标准的 Word 版并附修订说明，便于对照改版、快速定位变了什么。</p>
         <dl class="field">
-          <dt data-i18n="card_q">解决什么问题</dt>
-          <dd>—</dd>
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>九章正文 + 修订记录表</li>
+              <li>换箱入库三种场景操作标准</li>
+              <li>糖巧类按运输方式 + 温度判定验收条件</li>
+              <li>配套文件清单</li>
+            </ul>
+          </dd>
         </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 5.5 MB · MMHM-GYL-ZD-002</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_std">作业标准</div>
+        <h3>MMHM 拆零商品与物料作业标准 V2.0</h3>
+        <p class="lead">拆零商品与物料在库各环节作业标准，2026.10.08 生效。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>V2.0 新增斜插式周转箱打包要求</li>
+              <li>红 / 蓝胶带分色封箱，严禁混装</li>
+              <li>箱码与箱内商品一一对齐</li>
+              <li>分拣位设置、堆码与动线布局规范</li>
+              <li>拆零与整件物理隔离</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 1.2 MB · 供应链中心 · 2026.09</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_tpl">表格模板</div>
+        <h3>培训签到表</h3>
+        <p class="lead">培训实施签到存档模板，双栏 26 人容量，组织培训即拿即用。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>表头：主题 / 日期 / 时间 / 内容 / 讲师 / 地点</li>
+              <li>计划参训人数 + 实际参训人数登记</li>
+              <li>双栏签到区（序号 / 部门 / 签名）</li>
+              <li>讲师签名 + 部门负责人签名栏</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">XLSX · 11 KB · 空白模板</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 05 调度与切仓 -->
+  <section class="section" id="s5">
+    <div class="sec-head">
+      <div class="sec-no">05</div>
+      <h2 data-i18n="s5">调度与切仓</h2>
+      <div class="sec-count"></div>
+      <div class="sec-desc" data-i18n="s5d">切仓怎么切、单怎么放，照章执行</div>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_training">培训手册</div>
+        <h3>商丘仓配送标准与培训手册</h3>
+        <p class="lead">商丘仓承运商调度培训与标准宣贯手册，24 页，可照单执行。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>组织搭建：20 个专项群速查表 + 岗位通讯录</li>
+              <li>切仓计划：177 家门店分三批切入（商丘 / 开封 / 周口）</li>
+              <li>截单放单：8:00 / 12:00 截单、250 件门槛、五档时效</li>
+              <li>发运签收五节点考核、客诉 30 分钟闭环</li>
+              <li>退货管理、托盘流转、现场 7S</li>
+              <li>附录：司机 App 全步骤 53 张截图 + 开仓 Checklist</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PPTX · 16.0 MB · 编制人 谷亚权 · 2026.10.22</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>TMS 切仓和分配承运商操作手册</h3>
+        <p class="lead">TMS 里做切仓、给订单分配承运商的操作步骤与注意事项。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>新建切仓单 → 导入模板 → 配送经理审核生效</li>
+              <li>切仓需双方仓库沟通好节点，避免自动组波异常</li>
+              <li>切承运商后未切换订单需在订单管理重新激活</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 1.4 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>唯智 TMS 调度三步操作</h3>
+        <p class="lead">TMS 调度执行单的三步标准动作：看懂 → 调度 → 激活。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>看懂执行单：新单 / 加单 / 剩货，已复核才可调度</li>
+              <li>当天应到订单调度时限（日配 18 点 / 周期 12 点）</li>
+              <li>创建调度单核实司机 / 车牌 / 手机号 / 预约时间</li>
+              <li>调度单必须激活后才算调度成功</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 0.5 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_training">实操总结</div>
+        <h3>截单放单</h3>
+        <p class="lead">每日截单、放单、分拣进度更新的系统 + Excel 实操步骤总结。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>截单 7 步：导出 → 数据透视 → 辅助列 → 12 点截单</li>
+              <li>放单：波次生成与波次打印计划</li>
+              <li>分拣进度更新 7 步（拣货任务导出到报表布局）</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PPTX · 36.7 MB · 汇报人 梅志强 · 2026.03</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 06 TMS 系统操作 -->
+  <section class="section" id="s6">
+    <div class="sec-head">
+      <div class="sec-no">06</div>
+      <h2 data-i18n="s6">TMS 系统操作</h2>
+      <div class="sec-count"></div>
+      <div class="sec-desc" data-i18n="s6d">账号、组波、件数、围栏的排查与操作</div>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>唯智小程序操作流程</h3>
+        <p class="lead">司机端小程序从登录到签收的五步流程，位置权限是关键。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>手机号须与系统一致，位置权限选「使用小程序时和离开后」</li>
+              <li>到仓签到 → 确认门店信息 → 开始接单</li>
+              <li>装车须把货全部拉出集货位后再点完成</li>
+              <li>运抵签收：与门店交接后点签收完成</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 0.5 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>唯智司机车辆添加以及更改操作流程</h3>
+        <p class="lead">新增司机、新增车辆、修改信息的标准操作，避免「已存在」报错。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>新增司机：手机号尽量等于微信号，保存后必须点「可调度」</li>
+              <li>新增车辆：主驾驶员务必选对，选错需重改才能被调度</li>
+              <li>司机 / 车辆已存在时的修改路径</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 0.6 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>TMS 自动组波导入操作手册</h3>
+        <p class="lead">维护门店自动组波规则，统一在 TMS 维护，防波次混乱回传。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>下载模板按巨沃格式填写后导入</li>
+              <li>一次性字段填 0 表示不更新</li>
+              <li>优先级不能填 0，最优先填 1</li>
+              <li>不组波门店不填，避免两边维护口径不一</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 1.0 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">排查手册</div>
+        <h3>TMS 件数排查操作手册</h3>
+        <p class="lead">TMS 件数与现场实物不符时的排查方法，箱码规则一次讲清。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>巨沃拣货下架总箱数 vs TMS 总件数比对</li>
+              <li>ZD 开头 = 标品，GQ 开头 = 拆零物料</li>
+              <li>同一 GQ 箱码多 SKU 代表 1 件</li>
+              <li>常见不一致原因：PDA 点了装箱实际未拿大箱等</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 1.4 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>到店电子围栏操作手册</h3>
+        <p class="lead">到店无法运抵？修正门店经纬度，配合快捷运抵功能解决。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>百度地图拾取坐标 → 门店管理修改经纬度</li>
+              <li>旧订单仍绑旧坐标，只有新订单同步</li>
+              <li>快捷运抵功能可代替司机完成运抵</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 1.3 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_flow">流程指引</div>
+        <h3>系统账号申请指引</h3>
+        <p class="lead">申请唯智 TMS 系统账号权限的 BPM 路径，两步搞定。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>企微 BPM → 内部用户系统权限申请</li>
+              <li>选择唯智 TMS，其他按需填写</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 1.0 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_flow">流程指引</div>
+        <h3>线上异常流程反馈指引</h3>
+        <p class="lead">企微提交线上问题反馈，备注订单号是能被处理的关键。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>企微 BPM → 线上问题反馈处理流程</li>
+              <li>选择唯智 TMS，按需填写描述</li>
+              <li>必须备注需处理的订单号</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 2.2 MB</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 07 门店与电子签收 -->
+  <section class="section" id="s7">
+    <div class="sec-head">
+      <div class="sec-no">07</div>
+      <h2 data-i18n="s7">门店与电子签收</h2>
+      <div class="sec-count"></div>
+      <div class="sec-desc" data-i18n="s7d">门店收货、签收、认证的全套指引</div>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_training">操作图解</div>
+        <h3>门店电子签收流程指引</h3>
+        <p class="lead">门店收货人电子签收 8 步，每步一图，零门槛照做即可。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>企微扫一扫 → 扫司机二维码 → 确认并开始签署</li>
+              <li>合同阅览到底页签字 → 意愿认证（短信 / 人脸）</li>
+              <li>TMS 门店小程序入口与添加可签收人</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PPTX · 4.2 MB · 仓配中心 · 2024.07</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_training">异常处理</div>
+        <h3>门店电子签收异常汇总</h3>
+        <p class="lead">电子签收异常问题排查处理指引，FAQ 式对照解决。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>电子签收 5 条要求（架构 / 四方一致 / 定位 / 扫码 / 绑定）</li>
+              <li>签收人不在架构的三种处理办法</li>
+              <li>签收转圈、无自动签授权关系、认证失败等场景</li>
+              <li>附分仓上线电子签时间表</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PPTX · 35.5 MB · 仓配中心 · 2024.09</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_table">速查表</div>
+        <h3>电子签收异常汇总（仓端版本）</h3>
+        <p class="lead">仓端人员处理签收异常的速查表，异常问题 / 图片 / 解决办法三列对照。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>首签绑定门店、旧企微号更换等场景</li>
+              <li>TMS 联系人无企微 ID、默认管理员不存在</li>
+              <li>内嵌 16 张异常截图对照</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">XLSX · 4.6 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">配置指引</div>
+        <h3>电子签门店认证操作指引</h3>
+        <p class="lead">门店电子签（腾讯电子签）企业认证与授权配置，含五个主体公司清单。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>TMS 登录 → 门店管理获取认证链接</li>
+              <li>法人微信扫码 + 营业执照上传，等腾讯审核</li>
+              <li>添加企业印章、开通自动签署</li>
+              <li>五个主体公司自动签授权配置</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PPTX · 3.9 MB · 仓配中心 · 2025.03</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_training">操作手册</div>
+        <h3>门店 PDA 收货操作手册（更新版）</h3>
+        <p class="lead">PDA 扫码收货 15 步，带板门店只扫托盘码，收货效率准确率双提升。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>PDA 收货完毕后才可用小程序扫电子签收码</li>
+              <li>单 SKU 收货上限防重复收货</li>
+              <li>拆零物料扫拆零装箱码，其余扫 69 码</li>
+              <li>差异明细查看与异常登记缺货原因</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PPTX · 22.0 MB · 赵一鸣零食</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 08 司机端 -->
+  <section class="section" id="s8">
+    <div class="sec-head">
+      <div class="sec-no">08</div>
+      <h2 data-i18n="s8">司机端</h2>
+      <div class="sec-count"></div>
+      <div class="sec-desc" data-i18n="s8d">司机 App、退货、报备、新店时效</div>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>鸣鸣很忙 TMS 系统司机 APP 操作手册</h3>
+        <p class="lead">司机 APP 完整操作说明，六章覆盖从登录到异常登记全场景。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>登录改密、装车（签到 / 空车照 / 扫托盘核件数）</li>
+              <li>剩货登记扫码、副驾报备、联系门店</li>
+              <li>到店运抵与签收（生成二维码供门店扫码）</li>
+              <li>退货交接、司机考试、服务费异常提报</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 12.3 MB · 数字化中心 · MMHM-001</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>司机门店退货流程操作手册</h3>
+        <p class="lead">司机用小程序完成门店退货带回仓库，正常退货与指向性派单两条路径。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>退货交接 → 扫码装车 → 扫外箱条码 → 确认件数</li>
+              <li>到仓签收 → 交接 → 传实物照片 → 确认</li>
+              <li>指向性调度派单流程（创建调度单 → 激活派单）</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 2.4 MB · ZYM-001 · 2024.12</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>司机经纬度报备操作手册</h3>
+        <p class="lead">到店无法运抵时的定位异常报备，报完调度员核销还能更新门店坐标。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>异常登记 → 选门店 → 定位不准无法运抵</li>
+              <li>上传无法运抵照片 + 水印照片</li>
+              <li>调度员跟踪事件管理核销并更新经纬度</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">DOCX · 0.9 MB</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-tag" data-i18n="tag_manual">操作手册</div>
+        <h3>新店要求到达时间操作手册</h3>
+        <p class="lead">新店配送预约到达时间的设置与报错处理，保存后别忘了重建调度单。</p>
+        <dl class="field">
+          <dt data-i18n="f_content">主要内容</dt>
+          <dd>
+            <ul>
+              <li>「修改新店要求到达时间」入口与权限说明</li>
+              <li>预约时间只能填上午 / 下午 / 晚上</li>
+              <li>日期格式 2024-09-02，不能有时分秒</li>
+              <li>保存后需重新创建调度单并确认</li>
+            </ul>
+          </dd>
+        </dl>
+        <div class="card-foot">
+          <span class="card-meta">PDF · 1.7 MB</span>
+        </div>
       </article>
 
     </div>

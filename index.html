@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>亚权 · 个人工作台</title>
+<title>Gregory · 个人工作台</title>
+<meta name="description" content="Gregory（亚权）的个人工作台封面——个人介绍、个性签名与作品导航。">
 <style>
   :root{
     --brand:#FF6B35;
@@ -14,20 +15,73 @@
     --bg:#fafafa;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
   body{
-    font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
-    background:var(--bg);color:var(--ink);line-height:1.6;
-    padding:32px 20px;
+    font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink);line-height:1.6;background:var(--bg);
   }
-  .wrap{max-width:1080px;margin:0 auto;}
-  header{
-    background:linear-gradient(135deg,var(--brand),var(--brand-dark));
-    color:#fff;border-radius:16px;padding:36px 32px;margin-bottom:24px;
+
+  /* ===== 封面 Hero ===== */
+  .cover{
+    position:relative;overflow:hidden;
+    min-height:100svh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+    padding:64px 24px;
+    background:
+      radial-gradient(120% 90% at 85% -10%, rgba(255,107,53,.18), transparent 55%),
+      radial-gradient(120% 90% at -10% 110%, rgba(217,72,15,.16), transparent 55%),
+      linear-gradient(165deg,#FFF6EF 0%,#FFE7D8 50%,#FFD9C4 100%);
   }
-  header h1{font-size:28px;font-weight:800;letter-spacing:.5px;}
-  header .sub{margin-top:8px;opacity:.92;font-size:15px;}
-  header .meta{margin-top:14px;font-size:13px;opacity:.82;}
-  .stats{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px;}
+  .cover .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;z-index:0;}
+  .cover .blob.a{width:340px;height:340px;background:var(--brand);top:-90px;right:-60px;}
+  .cover .blob.b{width:300px;height:300px;background:var(--brand-dark);bottom:-100px;left:-70px;}
+  .cover-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;max-width:760px;width:100%;}
+
+  .avatar{
+    width:clamp(150px,30vw,220px);height:clamp(150px,30vw,220px);
+    border-radius:32px;overflow:hidden;background:#fff;
+    border:6px solid #fff;
+    box-shadow:0 18px 48px rgba(217,72,15,.28),0 4px 14px rgba(0,0,0,.12);
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  .name{
+    margin-top:30px;font-size:clamp(40px,9vw,76px);font-weight:800;
+    letter-spacing:1px;color:var(--ink);
+    background:linear-gradient(135deg,var(--brand-dark),var(--brand));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .role{
+    margin-top:10px;font-size:clamp(14px,3.2vw,18px);
+    color:var(--brand-dark);font-weight:600;letter-spacing:.5px;
+  }
+  .role .dot{opacity:.5;margin:0 8px;}
+
+  .sign{
+    position:relative;margin-top:30px;padding:0 8px;
+    max-width:600px;font-size:clamp(16px,4.2vw,21px);color:#41464f;
+    font-style:italic;line-height:1.9;
+  }
+  .sign::before{
+    content:"\201C";position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+    font-size:60px;line-height:1;color:var(--brand);opacity:.35;font-family:Georgia,serif;
+  }
+
+  .scroll-hint{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:1;
+    font-size:13px;color:var(--brand-dark);opacity:.7;letter-spacing:1px;
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,6px);}}
+
+  /* ===== 工作台 ===== */
+  .workbench{max-width:1080px;margin:0 auto;padding:48px 20px 32px;}
+  .sec-title{
+    font-size:20px;color:var(--brand-dark);margin-bottom:18px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .sec-title::before{content:"";width:4px;height:20px;background:var(--brand);border-radius:2px;}
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:30px;}
   .stat{
     background:#fff;border:1px solid var(--line);border-radius:12px;
     padding:14px 18px;flex:1;min-width:110px;text-align:center;
@@ -36,13 +90,8 @@
   .stat .n{font-size:24px;font-weight:800;color:var(--brand-dark);}
   .stat .t{font-size:12px;color:var(--muted);margin-top:2px;}
   .group{margin-bottom:28px;}
-  .group h2{
-    font-size:18px;color:var(--brand-dark);margin-bottom:14px;
-    display:flex;align-items:center;gap:8px;
-  }
-  .group h2::before{
-    content:"";width:4px;height:18px;background:var(--brand);border-radius:2px;
-  }
+  .group h2{font-size:18px;color:var(--brand-dark);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .group h2::before{content:"";width:4px;height:18px;background:var(--brand);border-radius:2px;}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
   .card{
     background:#fff;border:1px solid var(--line);border-radius:14px;
@@ -58,18 +107,36 @@
   .tag.plan{background:#f3f4f6;color:#6b7280;}
   .tag.ext{background:#eaf2ff;color:#1d4ed8;}
   .card a{color:var(--brand-dark);text-decoration:none;font-size:13px;font-weight:600;}
-  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:8px;}
-  @media(max-width:600px){header{padding:28px 22px;}body{padding:20px 14px;}.grid{grid-template-columns:1fr;}}
+  footer{text-align:center;color:var(--muted);font-size:13px;margin:24px 0 8px;}
+
+  @media(max-width:600px){
+    .cover{padding:48px 18px;}
+    .avatar{border-width:5px;border-radius:26px;}
+    .workbench{padding:36px 14px 24px;}
+    .grid{grid-template-columns:1fr;}
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>亚权 · 个人工作台</h1>
-    <div class="sub">鸣鸣很忙集团 · 赵一鸣零食 惠州仓 ｜ 配送组长 / 调度组长</div>
-    <div class="meta">最后更新：2026-10-23 ｜ 内容持续完善中</div>
-  </header>
 
+<!-- 封面 -->
+<section class="cover">
+  <div class="blob a"></div>
+  <div class="blob b"></div>
+  <div class="cover-inner">
+    <div class="avatar">
+      <img src="assets/avatar.jpg" alt="Gregory 头像">
+    </div>
+    <h1 class="name">Gregory</h1>
+    <p class="role">亚权<span class="dot">·</span>个人工作台</p>
+    <blockquote class="sign">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</blockquote>
+  </div>
+  <div class="scroll-hint">向下滚动 ↓</div>
+</section>
+
+<!-- 工作台 -->
+<div class="workbench">
+  <div class="sec-title">工作台导航</div>
   <div class="stats">
     <div class="stat"><div class="n">9</div><div class="t">工作板块</div></div>
     <div class="stat"><div class="n">4</div><div class="t">进行中</div></div>
@@ -130,17 +197,18 @@
       <div class="card">
         <h3>BI 及时率看板</h3>
         <p>bi.zymls.com ｜ 配送履约及时率数据看板（需账号登录）。</p>
-        <div class="foot"><span class="tag ext">内网系统</span><a href="https://bi.zymls.com" target="_blank">打开 ↗</a></div>
+        <div class="foot"><span class="tag ext">内网系统</span><a href="https://bi.zymls.com" target="_blank" rel="noopener">打开 ↗</a></div>
       </div>
       <div class="card">
         <h3>VTMS 运输订单</h3>
         <p>vtms.hnlshm.com ｜ 运输订单管理平台（需账号登录）。</p>
-        <div class="foot"><span class="tag ext">内网系统</span><a href="https://vtms.hnlshm.com" target="_blank">打开 ↗</a></div>
+        <div class="foot"><span class="tag ext">内网系统</span><a href="https://vtms.hnlshm.com" target="_blank" rel="noopener">打开 ↗</a></div>
       </div>
     </div>
   </div>
 
-  <footer>个人工作台骨架 · 板块与文案为占位，后续按需求逐步填充真实内容</footer>
+  <footer>个人工作台 · 封面已上线，板块与文案为占位，后续按需求逐步填充真实内容</footer>
 </div>
+
 </body>
 </html>

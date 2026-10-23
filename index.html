@@ -58,9 +58,22 @@
     font-size:60px;line-height:1;color:var(--brand);opacity:.35;font-family:Georgia,serif;
   }
 
+  /* 极轻入口：不参与封面视觉重心 */
+  .tools-entry{
+    position:fixed;right:30px;bottom:26px;z-index:5;
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:rgba(31,36,48,.36);text-decoration:none;
+    padding:8px 0;
+    transition:color .2s ease;
+  }
+  .tools-entry::after{content:"\2197";font-size:12px;letter-spacing:0;}
+  .tools-entry:hover{color:var(--brand-dark);}
+
   @media(max-width:600px){
     .cover{padding:48px 18px;}
     .avatar{border-width:5px;border-radius:26px;}
+    .tools-entry{right:20px;bottom:16px;font-size:10px;letter-spacing:.16em;}
   }
 </style>
 </head>
@@ -77,6 +90,8 @@
     <blockquote class="sign">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</blockquote>
   </div>
 </section>
+
+<a class="tools-entry" href="tools.html">Tools</a>
 
 </body>
 </html>

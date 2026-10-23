@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工具库 · Gregory</title>
+<meta name="description" content="Gregory 内部工具库——配送运营、制度规范、流程通知与交接沉淀的可用工具集合。">
+<style>
+  :root{
+    --brand:#FF6B35;
+    --brand-dark:#D9480F;
+    --ink:#1B1F27;
+    --ink-2:#4A515E;
+    --ink-3:#8A9099;
+    --line:#E8E2DB;
+    --paper:#FAF8F5;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- 顶部 ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 0;border-bottom:1px solid var(--line);
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:13px;letter-spacing:.06em;color:var(--ink-3);text-decoration:none;
+    transition:color .18s ease;
+  }
+  .back:hover{color:var(--brand-dark);}
+  .back span{font-size:15px;line-height:1;}
+  .mark{
+    font-size:12px;letter-spacing:.22em;color:var(--ink-3);text-transform:uppercase;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:72px 0 56px;
+    display:grid;grid-template-columns:1.35fr .85fr;gap:48px;align-items:end;
+  }
+  .hero h1{
+    font-size:clamp(34px,5.4vw,54px);font-weight:800;letter-spacing:-.5px;line-height:1.18;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(135deg,var(--brand-dark),var(--brand));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .hero p{font-size:15px;color:var(--ink-2);max-width:430px;}
+  .hero-meta{
+    margin-top:16px;font-size:12px;letter-spacing:.14em;color:var(--ink-3);
+  }
+
+  /* ---------- 分区导航 ---------- */
+  .nav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(250,248,245,.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    display:flex;gap:26px;overflow-x:auto;padding:14px 0;
+    scrollbar-width:none;
+  }
+  .nav::-webkit-scrollbar{display:none;}
+  .nav a{
+    font-size:13px;color:var(--ink-3);text-decoration:none;white-space:nowrap;
+    letter-spacing:.04em;padding-bottom:2px;border-bottom:1.5px solid transparent;
+    transition:color .18s ease,border-color .18s ease;
+  }
+  .nav a:hover{color:var(--ink);border-color:var(--brand);}
+
+  /* ---------- 分区 ---------- */
+  .section{padding:64px 0 8px;scroll-margin-top:64px;}
+  .sec-head{display:flex;align-items:baseline;gap:18px;padding-bottom:22px;border-bottom:1px solid var(--line);}
+  .sec-no{
+    font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--brand-dark);
+    font-variant-numeric:tabular-nums;flex:none;
+  }
+  .sec-head h2{font-size:22px;font-weight:700;letter-spacing:-.2px;}
+  .sec-desc{margin-left:auto;font-size:13px;color:var(--ink-3);text-align:right;}
+
+  /* ---------- 卡片 ---------- */
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:18px;padding-top:28px;
+  }
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:24px 24px 22px;display:flex;flex-direction:column;
+    transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+  }
+  .card:hover{
+    border-color:#F5C4AC;box-shadow:0 10px 28px rgba(217,72,15,.08);transform:translateY(-2px);
+  }
+  .card-tag{
+    align-self:flex-start;font-size:11px;letter-spacing:.08em;
+    color:var(--brand-dark);background:#FFF1E9;border-radius:5px;
+    padding:3px 9px;margin-bottom:14px;
+  }
+  .card h3{font-size:17px;font-weight:700;letter-spacing:-.1px;line-height:1.4;}
+  .card .lead{margin-top:9px;font-size:13.5px;color:var(--ink-2);}
+
+  .field{margin-top:18px;padding-top:14px;border-top:1px solid #F2EEE9;font-size:13px;}
+  .field dt{color:var(--ink-3);font-size:11.5px;letter-spacing:.06em;margin-bottom:4px;}
+  .field dd{color:var(--ink-2);}
+
+  /* 待接入占位态 */
+  .card.pending{
+    border-style:dashed;border-color:#DDD6CE;background:transparent;
+  }
+  .card.pending .card-tag{color:var(--ink-3);background:#F2EEE9;}
+  .card.pending h3{color:var(--ink-3);font-weight:600;}
+  .card.pending .lead{color:#A9AEB6;}
+
+  /* ---------- 页脚 ---------- */
+  .foot{
+    margin-top:88px;border-top:1px solid var(--line);
+    padding:30px 0 56px;display:flex;justify-content:space-between;gap:24px;
+    font-size:12.5px;color:var(--ink-3);
+  }
+  .foot b{color:var(--ink-2);font-weight:600;}
+
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr;gap:26px;padding:52px 0 40px;align-items:start;}
+    .sec-desc{display:none;}
+  }
+  @media(max-width:600px){
+    .wrap{padding:0 20px;}
+    .grid{grid-template-columns:1fr;}
+    .hero h1{font-size:32px;}
+    .foot{flex-direction:column;gap:10px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="back" href="index.html"><span>←</span> 返回封面</a>
+    <div class="mark">Internal Tools</div>
+  </div>
+
+  <header class="hero">
+    <div>
+      <h1>把干过的活，<br>做成<em>别人也能跑</em>的工具。</h1>
+      <div class="hero-meta">GREGORY · TOOL LIBRARY</div>
+    </div>
+    <p>
+      这里放的是我在仓配配送现场做出来、并且能直接交给别人用的东西——
+      不是汇报材料，是照着就能执行的模板、表格、流程和检查清单。
+      每一项都标了解决什么问题、怎么用、需要什么前提。
+    </p>
+  </header>
+
+</div>
+
+<nav class="nav">
+  <div class="wrap" style="display:flex;gap:26px;">
+    <a href="#s1">01 数据与看板</a>
+    <a href="#s2">02 制度与规范</a>
+    <a href="#s3">03 流程与通知</a>
+    <a href="#s4">04 交接与沉淀</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- 01 -->
+  <section class="section" id="s1">
+    <div class="sec-head">
+      <div class="sec-no">01</div>
+      <h2>数据与看板</h2>
+      <div class="sec-desc">把散在各系统的数据，变成能直接看的结论</div>
+    </div>
+    <div class="grid">
+
+      <article class="card pending">
+        <div class="card-tag">待接入</div>
+        <h3>工具名称待填</h3>
+        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <dl class="field">
+          <dt>解决什么问题</dt>
+          <dd>—</dd>
+        </dl>
+      </article>
+
+      <article class="card pending">
+        <div class="card-tag">待接入</div>
+        <h3>工具名称待填</h3>
+        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <dl class="field">
+          <dt>解决什么问题</dt>
+          <dd>—</dd>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="section" id="s2">
+    <div class="sec-head">
+      <div class="sec-no">02</div>
+      <h2>制度与规范</h2>
+      <div class="sec-desc">把口头约定，固化成谁都能照做的标准</div>
+    </div>
+    <div class="grid">
+
+      <article class="card pending">
+        <div class="card-tag">待接入</div>
+        <h3>工具名称待填</h3>
+        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <dl class="field">
+          <dt>解决什么问题</dt>
+          <dd>—</dd>
+        </dl>
+      </article>
+
+      <article class="card pending">
+        <div class="card-tag">待接入</div>
+        <h3>工具名称待填</h3>
+        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <dl class="field">
+          <dt>解决什么问题</dt>
+          <dd>—</dd>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="section" id="s3">
+    <div class="sec-head">
+      <div class="sec-no">03</div>
+      <h2>流程与通知</h2>
+      <div class="sec-desc">重复发生的事，不再每次从零写一遍</div>
+    </div>
+    <div class="grid">
+
+      <article class="card pending">
+        <div class="card-tag">待接入</div>
+        <h3>工具名称待填</h3>
+        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <dl class="field">
+          <dt>解决什么问题</dt>
+          <dd>—</dd>
+        </dl>
+      </article>
+
+      <article class="card pending">
+        <div class="card-tag">待接入</div>
+        <h3>工具名称待填</h3>
+        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <dl class="field">
+          <dt>解决什么问题</dt>
+          <dd>—</dd>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="section" id="s4">
+    <div class="sec-head">
+      <div class="sec-no">04</div>
+      <h2>交接与沉淀</h2>
+      <div class="sec-desc">人走了，东西还在</div>
+    </div>
+    <div class="grid">
+
+      <article class="card pending">
+        <div class="card-tag">待接入</div>
+        <h3>工具名称待填</h3>
+        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <dl class="field">
+          <dt>解决什么问题</dt>
+          <dd>—</dd>
+        </dl>
+      </article>
+
+      <article class="card pending">
+        <div class="card-tag">待接入</div>
+        <h3>工具名称待填</h3>
+        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <dl class="field">
+          <dt>解决什么问题</dt>
+          <dd>—</dd>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div>内部使用 · <b>新同事接手可直接按此上手</b></div>
+    <div>由 Gregory 维护 · 内容持续补充</div>
+  </footer>
+
+</div>
+
+</body>
+</html>

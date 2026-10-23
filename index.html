@@ -3,67 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gregory</title>
-<meta name="description" content="Gregory 个人封面——头像、姓名与个性签名。">
+<title>Gregory's tools</title>
+<meta name="description" content="Gregory 的内部工具库——把仓配配送现场的实操经验，做成别人也能跑的工具。">
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <style>
   :root{
     --brand:#FF6B35;
     --brand-dark:#D9480F;
-    --ink:#1f2430;
+    --ink:#1B1F27;
+    --ink-2:#4A515E;
+    --ink-3:#8A9099;
+    --line:#E8E2DB;
+    --paper:#FAF8F5;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{height:100%;}
   body{
     font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
-    color:var(--ink);line-height:1.6;
+    background:var(--paper);color:var(--ink);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
   }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
 
-  .cover{
-    position:relative;overflow:hidden;
-    min-height:100svh;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;text-align:center;
-    padding:64px 24px;
-    background:
-      radial-gradient(120% 90% at 85% -10%, rgba(255,107,53,.18), transparent 55%),
-      radial-gradient(120% 90% at -10% 110%, rgba(217,72,15,.16), transparent 55%),
-      linear-gradient(165deg,#FFF6EF 0%,#FFE7D8 50%,#FFD9C4 100%);
-  }
-  .cover .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;z-index:0;}
-  .cover .blob.a{width:340px;height:340px;background:var(--brand);top:-90px;right:-60px;}
-  .cover .blob.b{width:300px;height:300px;background:var(--brand-dark);bottom:-100px;left:-70px;}
-  .cover-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;max-width:760px;width:100%;}
+  /* ---------- 烟花画布 ---------- */
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:99;}
 
-  .avatar{
-    width:clamp(150px,30vw,220px);height:clamp(150px,30vw,220px);
-    border-radius:32px;overflow:hidden;background:#fff;
-    border:6px solid #fff;
-    box-shadow:0 18px 48px rgba(217,72,15,.28),0 4px 14px rgba(0,0,0,.12);
-  }
-  .avatar img{width:100%;height:100%;object-fit:cover;display:block;}
-
-  .name{
-    margin-top:30px;font-size:clamp(40px,9vw,76px);font-weight:800;
-    letter-spacing:1px;
-    background:linear-gradient(135deg,var(--brand-dark),var(--brand));
-    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  }
-
-  .sign{
-    position:relative;margin-top:28px;padding:0 8px;
-    max-width:600px;font-size:clamp(16px,4.2vw,21px);color:#41464f;
-    font-style:italic;line-height:1.9;
-  }
-  .sign::before{
-    content:"\201C";position:absolute;top:-22px;left:50%;transform:translateX(-50%);
-    font-size:60px;line-height:1;color:var(--brand);opacity:.35;font-family:Georgia,serif;
-  }
-
-  /* 签名品牌标识（左上角） */
-  .brand{
-    display:inline-flex;align-items:center;gap:10px;text-decoration:none;
-  }
+  /* ---------- 签名品牌标识 ---------- */
+  .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;}
   .brand-mark{
     width:30px;height:30px;border-radius:9px;flex:none;
     background:linear-gradient(135deg,var(--brand-dark),var(--brand));
@@ -78,49 +44,200 @@
     color:var(--ink);transition:color .2s ease;
   }
   .brand:hover .brand-name{color:var(--brand-dark);}
-  .brand-fixed{position:fixed;top:22px;left:30px;z-index:10;}
 
-  /* 极轻入口：不参与封面视觉重心 */
-  .tools-entry{
-    position:fixed;right:30px;bottom:26px;z-index:5;
-    display:inline-flex;align-items:center;gap:6px;
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-    color:rgba(31,36,48,.36);text-decoration:none;
-    padding:8px 0;
-    transition:color .2s ease;
+  /* ---------- 顶栏 ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,248,245,.90);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
   }
-  .tools-entry::after{content:"\2197";font-size:12px;letter-spacing:0;}
-  .tools-entry:hover{color:var(--brand-dark);}
+  .bar-inner{display:flex;align-items:center;gap:28px;padding:13px 0;}
+  .menu{margin-left:auto;display:flex;gap:26px;}
+  .menu a{
+    font-size:14px;color:var(--ink-2);text-decoration:none;
+    padding-bottom:2px;border-bottom:1.5px solid transparent;
+    transition:color .18s ease,border-color .18s ease;
+  }
+  .menu a:hover{color:var(--ink);border-color:var(--brand);}
+  .me{
+    width:34px;height:34px;border-radius:50%;object-fit:cover;flex:none;
+    border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.14);display:block;
+  }
 
+  /* ---------- Hero ---------- */
+  .hero{
+    display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center;
+    padding:64px 0 72px;min-height:calc(100svh - 62px);
+  }
+  .kicker{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12.5px;letter-spacing:.05em;color:var(--brand-dark);
+    background:#FFF1E9;padding:6px 13px;border-radius:999px;
+  }
+  .kicker i{width:6px;height:6px;border-radius:50%;background:var(--brand);}
+  .hero h1{
+    margin-top:22px;
+    font-size:clamp(34px,5.6vw,58px);font-weight:800;
+    letter-spacing:-.5px;line-height:1.2;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(135deg,var(--brand-dark),var(--brand));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .hero .sub{
+    margin-top:18px;font-size:15.5px;color:var(--ink-2);max-width:460px;
+  }
+  .cta{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:linear-gradient(135deg,var(--brand-dark),var(--brand));
+    color:#fff;text-decoration:none;font-weight:600;font-size:15px;
+    padding:13px 27px;border-radius:999px;
+    box-shadow:0 10px 26px rgba(217,72,15,.30);
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(217,72,15,.36);}
+
+  /* ---------- 右侧名片卡 ---------- */
+  .hero-visual{position:relative;display:flex;justify-content:center;}
+  .hero-visual .glow{
+    position:absolute;width:340px;height:340px;border-radius:50%;
+    background:var(--brand);filter:blur(90px);opacity:.22;top:50%;left:50%;
+    transform:translate(-50%,-50%);pointer-events:none;
+  }
+  .idcard{
+    position:relative;z-index:1;
+    background:#fff;border:1px solid var(--line);border-radius:22px;
+    padding:36px 32px 30px;max-width:340px;width:100%;text-align:center;
+    transform:rotate(3deg);
+    box-shadow:0 26px 60px rgba(217,72,15,.16),0 6px 18px rgba(0,0,0,.06);
+    transition:transform .35s ease;
+  }
+  .idcard:hover{transform:rotate(0deg) translateY(-4px);}
+  .idcard img{
+    width:118px;height:118px;border-radius:26px;object-fit:cover;
+    border:4px solid #FFF3EB;box-shadow:0 10px 24px rgba(217,72,15,.18);
+  }
+  .idcard-name{
+    margin-top:16px;font-size:26px;font-weight:800;letter-spacing:.5px;
+    background:linear-gradient(135deg,var(--brand-dark),var(--brand));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .idcard-sign{
+    margin-top:10px;font-size:13.5px;color:var(--ink-2);
+    font-style:italic;line-height:1.8;
+  }
+
+  /* ---------- 页脚 ---------- */
+  .foot{
+    border-top:1px solid var(--line);
+    padding:22px 0 34px;display:flex;justify-content:space-between;gap:18px;
+    font-size:12.5px;color:var(--ink-3);
+  }
+  .foot .sig{font-style:italic;max-width:520px;}
+
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr;gap:44px;padding:44px 0 56px;min-height:0;}
+    .hero-visual{order:2;}
+    .foot{flex-direction:column;gap:8px;}
+  }
   @media(max-width:600px){
-    .cover{padding:48px 18px;}
-    .avatar{border-width:5px;border-radius:26px;}
-    .tools-entry{right:20px;bottom:16px;font-size:10px;letter-spacing:.16em;}
-    .brand-fixed{top:16px;left:20px;}
+    .wrap{padding:0 20px;}
     .brand-mark{width:26px;height:26px;font-size:16px;line-height:26px;border-radius:8px;}
     .brand-name{font-size:19px;}
+    .me{width:30px;height:30px;}
+    .idcard{padding:28px 22px 24px;}
   }
 </style>
 </head>
 <body>
 
-<section class="cover">
-  <a class="brand brand-fixed" href="index.html">
-    <span class="brand-mark">G</span>
-    <span class="brand-name">Gregory's tools</span>
-  </a>
-  <div class="blob a"></div>
-  <div class="blob b"></div>
-  <div class="cover-inner">
-    <div class="avatar">
-      <img src="assets/avatar.jpg" alt="Gregory 头像">
-    </div>
-    <h1 class="name">Gregory</h1>
-    <blockquote class="sign">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</blockquote>
-  </div>
-</section>
+<canvas id="fx" aria-hidden="true"></canvas>
 
-<a class="tools-entry" href="tools.html">Tools</a>
+<header class="topbar">
+  <div class="wrap bar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">G</span>
+      <span class="brand-name">Gregory's tools</span>
+    </a>
+    <nav class="menu">
+      <a href="tools.html">工具库</a>
+    </nav>
+    <img class="me" src="assets/avatar.jpg" alt="Gregory 头像">
+  </div>
+</header>
+
+<main class="hero wrap">
+  <div class="hero-copy">
+    <div class="kicker"><i></i>内部工具库 · 持续补充</div>
+    <h1>把干过的活，<br>做成<em>别人也能跑</em>的工具。</h1>
+    <p class="sub">
+      这里放的是我从仓配配送现场做出来、能直接交给别人用的东西——
+      模板、表格、流程和检查清单，每项都写清楚解决什么问题、怎么用、需要什么前提。
+    </p>
+    <div class="cta">
+      <a class="btn" href="tools.html">进入工具库 →</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="glow"></div>
+    <div class="idcard">
+      <img src="assets/avatar.jpg" alt="Gregory 头像">
+      <div class="idcard-name">Gregory</div>
+      <p class="idcard-sign">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</p>
+    </div>
+  </div>
+</main>
+
+<footer class="foot wrap">
+  <span class="sig">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</span>
+  <span>Gregory's tools · 内部使用 · 工具持续补充</span>
+</footer>
+
+<script>
+(function(){
+  var cv=document.getElementById('fx'),ctx=cv.getContext('2d');
+  var P=[],raf=null,COLORS=['#FF6B35','#D9480F','#FFB088','#FFD9C4','#FFEDE2','#FFFFFF'];
+  function rs(){
+    var d=window.devicePixelRatio||1;
+    cv.width=innerWidth*d;cv.height=innerHeight*d;
+    cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+    ctx.setTransform(d,0,0,d,0,0);
+  }
+  rs();addEventListener('resize',rs);
+  function loop(){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    for(var i=P.length-1;i>=0;i--){
+      var p=P[i];
+      p.x+=p.vx;p.y+=p.vy;
+      p.vy+=0.06;p.vx*=0.985;p.vy*=0.985;
+      p.life-=p.dec;
+      if(p.life<=0){P.splice(i,1);continue;}
+      ctx.globalAlpha=Math.max(p.life,0);
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.29);
+      ctx.fillStyle=p.c;ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    raf=P.length?requestAnimationFrame(loop):null;
+    if(!P.length)ctx.clearRect(0,0,innerWidth,innerHeight);
+  }
+  addEventListener('click',function(e){
+    for(var i=0;i<28;i++){
+      var a=Math.random()*6.283,s=2+Math.random()*4.5;
+      P.push({
+        x:e.clientX,y:e.clientY,
+        vx:Math.cos(a)*s,vy:Math.sin(a)*s-1.2,
+        life:1,dec:0.014+Math.random()*0.02,
+        r:1.5+Math.random()*2.5,
+        c:COLORS[(Math.random()*COLORS.length)|0]
+      });
+    }
+    if(!raf)raf=requestAnimationFrame(loop);
+  });
+})();
+</script>
 
 </body>
 </html>

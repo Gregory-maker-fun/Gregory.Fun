@@ -26,6 +26,9 @@
   }
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
 
+  /* ---------- 烟花画布 ---------- */
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:99;}
+
   /* ---------- 签名品牌标识 ---------- */
   .brand{
     display:inline-flex;align-items:center;gap:10px;text-decoration:none;
@@ -59,21 +62,12 @@
   .back span{font-size:15px;line-height:1;}
 
   /* ---------- Hero ---------- */
-  .hero{
-    padding:72px 0 56px;
-    display:grid;grid-template-columns:1.35fr .85fr;gap:48px;align-items:end;
-  }
+  .hero{padding:56px 0 40px;}
   .hero h1{
-    font-size:clamp(34px,5.4vw,54px);font-weight:800;letter-spacing:-.5px;line-height:1.18;
+    font-size:clamp(30px,4.6vw,44px);font-weight:800;letter-spacing:-.5px;line-height:1.2;
   }
-  .hero h1 em{
-    font-style:normal;
-    background:linear-gradient(135deg,var(--brand-dark),var(--brand));
-    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  }
-  .hero p{font-size:15px;color:var(--ink-2);max-width:430px;}
-  .hero-meta{
-    margin-top:16px;font-size:12px;letter-spacing:.14em;color:var(--ink-3);
+  .hero p{
+    margin-top:12px;font-size:14.5px;color:var(--ink-2);max-width:560px;
   }
 
   /* ---------- 分区导航 ---------- */
@@ -144,13 +138,12 @@
   .foot b{color:var(--ink-2);font-weight:600;}
 
   @media(max-width:860px){
-    .hero{grid-template-columns:1fr;gap:26px;padding:52px 0 40px;align-items:start;}
+    .hero{padding:40px 0 32px;}
     .sec-desc{display:none;}
   }
   @media(max-width:600px){
     .wrap{padding:0 20px;}
     .grid{grid-template-columns:1fr;}
-    .hero h1{font-size:32px;}
     .foot{flex-direction:column;gap:10px;}
     .brand-mark{width:26px;height:26px;font-size:16px;line-height:26px;border-radius:8px;}
     .brand-name{font-size:19px;}
@@ -158,6 +151,8 @@
 </style>
 </head>
 <body>
+
+<canvas id="fx" aria-hidden="true"></canvas>
 
 <div class="wrap">
 
@@ -170,15 +165,8 @@
   </div>
 
   <header class="hero">
-    <div>
-      <h1>把干过的活，<br>做成<em>别人也能跑</em>的工具。</h1>
-      <div class="hero-meta">GREGORY · TOOL LIBRARY</div>
-    </div>
-    <p>
-      这里放的是我在仓配配送现场做出来、并且能直接交给别人用的东西——
-      不是汇报材料，是照着就能执行的模板、表格、流程和检查清单。
-      每一项都标了解决什么问题、怎么用、需要什么前提。
-    </p>
+    <h1>工具库</h1>
+    <p>从仓配配送现场做出来、能直接交给别人用的东西——每项都写清楚解决什么问题、怎么用、需要什么前提。</p>
   </header>
 
 </div>
@@ -328,6 +316,49 @@
   </footer>
 
 </div>
+
+<script>
+(function(){
+  var cv=document.getElementById('fx'),ctx=cv.getContext('2d');
+  var P=[],raf=null,COLORS=['#FF6B35','#D9480F','#FFB088','#FFD9C4','#FFEDE2','#FFFFFF'];
+  function rs(){
+    var d=window.devicePixelRatio||1;
+    cv.width=innerWidth*d;cv.height=innerHeight*d;
+    cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+    ctx.setTransform(d,0,0,d,0,0);
+  }
+  rs();addEventListener('resize',rs);
+  function loop(){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    for(var i=P.length-1;i>=0;i--){
+      var p=P[i];
+      p.x+=p.vx;p.y+=p.vy;
+      p.vy+=0.06;p.vx*=0.985;p.vy*=0.985;
+      p.life-=p.dec;
+      if(p.life<=0){P.splice(i,1);continue;}
+      ctx.globalAlpha=Math.max(p.life,0);
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.29);
+      ctx.fillStyle=p.c;ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    raf=P.length?requestAnimationFrame(loop):null;
+    if(!P.length)ctx.clearRect(0,0,innerWidth,innerHeight);
+  }
+  addEventListener('click',function(e){
+    for(var i=0;i<28;i++){
+      var a=Math.random()*6.283,s=2+Math.random()*4.5;
+      P.push({
+        x:e.clientX,y:e.clientY,
+        vx:Math.cos(a)*s,vy:Math.sin(a)*s-1.2,
+        life:1,dec:0.014+Math.random()*0.02,
+        r:1.5+Math.random()*2.5,
+        c:COLORS[(Math.random()*COLORS.length)|0]
+      });
+    }
+    if(!raf)raf=requestAnimationFrame(loop);
+  });
+})();
+</script>
 
 </body>
 </html>

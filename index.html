@@ -3,10 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gregory's tools</title>
+<title data-i18n="title_home">Gregory's tools</title>
 <meta name="description" content="Gregory 的内部工具库——把仓配配送现场的实操经验，做成别人也能跑的工具。">
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<script>
+/* 主题预置：防止暗色模式闪白 */
+(function(){
+  var m=localStorage.getItem('gt_theme')||'auto';
+  var d=m==='dark'||(m==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.dataset.theme=d?'dark':'light';
+})();
+</script>
+<script src="assets/app.js" defer></script>
 <style>
   :root{
     --brand:#FF6B35;
@@ -16,12 +25,26 @@
     --ink-3:#8A9099;
     --line:#E8E2DB;
     --paper:#FAF8F5;
+    --card:#FFFFFF;
+    --brand-soft:#FFF1E9;
+    --topbar-bg:rgba(250,248,245,.90);
+  }
+  html[data-theme="dark"]{
+    --ink:#ECEDEF;
+    --ink-2:#B6BBC4;
+    --ink-3:#787E88;
+    --line:#2A2E36;
+    --paper:#14161B;
+    --card:#1C1F26;
+    --brand-soft:#33231A;
+    --topbar-bg:rgba(20,22,27,.88);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
     background:var(--paper);color:var(--ink);line-height:1.65;
     -webkit-font-smoothing:antialiased;
+    transition:background .25s ease,color .25s ease;
   }
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
 
@@ -48,10 +71,10 @@
   /* ---------- 顶栏 ---------- */
   .topbar{
     position:sticky;top:0;z-index:50;
-    background:rgba(250,248,245,.90);backdrop-filter:blur(10px);
+    background:var(--topbar-bg);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
-  .bar-inner{display:flex;align-items:center;gap:28px;padding:13px 0;}
+  .bar-inner{display:flex;align-items:center;gap:22px;padding:13px 0;}
   .menu{margin-left:auto;display:flex;gap:26px;}
   .menu a{
     font-size:14px;color:var(--ink-2);text-decoration:none;
@@ -61,7 +84,7 @@
   .menu a:hover{color:var(--ink);border-color:var(--brand);}
   .me{
     width:34px;height:34px;border-radius:50%;object-fit:cover;flex:none;
-    border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.14);display:block;
+    border:2px solid var(--card);box-shadow:0 2px 8px rgba(0,0,0,.14);display:block;
   }
 
   /* ---------- Hero ---------- */
@@ -72,7 +95,7 @@
   .kicker{
     display:inline-flex;align-items:center;gap:8px;
     font-size:12.5px;letter-spacing:.05em;color:var(--brand-dark);
-    background:#FFF1E9;padding:6px 13px;border-radius:999px;
+    background:var(--brand-soft);padding:6px 13px;border-radius:999px;
   }
   .kicker i{width:6px;height:6px;border-radius:50%;background:var(--brand);}
   .hero h1{
@@ -106,9 +129,10 @@
     background:var(--brand);filter:blur(90px);opacity:.22;top:50%;left:50%;
     transform:translate(-50%,-50%);pointer-events:none;
   }
+  html[data-theme="dark"] .hero-visual .glow{opacity:.14;}
   .idcard{
     position:relative;z-index:1;
-    background:#fff;border:1px solid var(--line);border-radius:22px;
+    background:var(--card);border:1px solid var(--line);border-radius:22px;
     padding:36px 32px 30px;max-width:340px;width:100%;text-align:center;
     transform:rotate(3deg);
     box-shadow:0 26px 60px rgba(217,72,15,.16),0 6px 18px rgba(0,0,0,.06);
@@ -117,7 +141,7 @@
   .idcard:hover{transform:rotate(0deg) translateY(-4px);}
   .idcard img{
     width:118px;height:118px;border-radius:26px;object-fit:cover;
-    border:4px solid #FFF3EB;box-shadow:0 10px 24px rgba(217,72,15,.18);
+    border:4px solid var(--brand-soft);box-shadow:0 10px 24px rgba(217,72,15,.18);
   }
   .idcard-name{
     margin-top:16px;font-size:26px;font-weight:800;letter-spacing:.5px;
@@ -132,15 +156,17 @@
   /* ---------- 页脚 ---------- */
   .foot{
     border-top:1px solid var(--line);
-    padding:22px 0 34px;display:flex;justify-content:space-between;gap:18px;
+    padding:22px 0 34px;display:flex;justify-content:space-between;align-items:center;gap:18px;
     font-size:12.5px;color:var(--ink-3);
   }
-  .foot .sig{font-style:italic;max-width:520px;}
+  .foot .sig{font-style:italic;max-width:400px;}
+  .foot .meta{text-align:right;display:flex;flex-direction:column;gap:2px;}
 
   @media(max-width:860px){
     .hero{grid-template-columns:1fr;gap:44px;padding:44px 0 56px;min-height:0;}
     .hero-visual{order:2;}
-    .foot{flex-direction:column;gap:8px;}
+    .foot{flex-direction:column;gap:14px;}
+    .foot .meta{text-align:center;}
   }
   @media(max-width:600px){
     .wrap{padding:0 20px;}
@@ -148,6 +174,7 @@
     .brand-name{font-size:19px;}
     .me{width:30px;height:30px;}
     .idcard{padding:28px 22px 24px;}
+    .bar-inner{gap:14px;}
   }
 </style>
 </head>
@@ -162,22 +189,23 @@
       <span class="brand-name">Gregory's tools</span>
     </a>
     <nav class="menu">
-      <a href="tools.html">工具库</a>
+      <a href="tools.html" data-i18n="menu_tools">工具库</a>
     </nav>
+    <div class="ctrls"></div>
     <img class="me" src="assets/avatar.jpg" alt="Gregory 头像">
   </div>
 </header>
 
 <main class="hero wrap">
   <div class="hero-copy">
-    <div class="kicker"><i></i>内部工具库 · 持续补充</div>
-    <h1>把干过的活，<br>做成<em>别人也能跑</em>的工具。</h1>
-    <p class="sub">
+    <div class="kicker"><i></i><span data-i18n="kicker">内部工具库 · 持续补充</span></div>
+    <h1 data-i18n="hero_h1">把干过的活，<br>做成<em>别人也能跑</em>的工具。</h1>
+    <p class="sub" data-i18n="hero_sub">
       这里放的是我从仓配配送现场做出来、能直接交给别人用的东西——
       模板、表格、流程和检查清单，每项都写清楚解决什么问题、怎么用、需要什么前提。
     </p>
     <div class="cta">
-      <a class="btn" href="tools.html">进入工具库 →</a>
+      <a class="btn" href="tools.html" data-i18n="btn_enter">进入工具库 →</a>
     </div>
   </div>
 
@@ -186,58 +214,21 @@
     <div class="idcard">
       <img src="assets/avatar.jpg" alt="Gregory 头像">
       <div class="idcard-name">Gregory</div>
-      <p class="idcard-sign">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</p>
+      <p class="idcard-sign" data-i18n="sign">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</p>
     </div>
   </div>
 </main>
 
 <footer class="foot wrap">
-  <span class="sig">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</span>
-  <span>Gregory's tools · 内部使用 · 工具持续补充</span>
+  <span class="sig" data-i18n="sign">目前为止还觉得这个世界挺有意思，还在寻找跟它更好相处的方式</span>
+  <button class="coffee-btn" data-coffee type="button">
+    <span data-i18n="coffee_btn">请我喝杯咖啡</span>
+  </button>
+  <div class="meta">
+    <span data-i18n="foot_use">Gregory's tools · 内部使用 · 工具持续补充</span>
+    <span data-i18n-date>最后更新</span>
+  </div>
 </footer>
-
-<script>
-(function(){
-  var cv=document.getElementById('fx'),ctx=cv.getContext('2d');
-  var P=[],raf=null,COLORS=['#FF6B35','#D9480F','#FFB088','#FFD9C4','#FFEDE2','#FFFFFF'];
-  function rs(){
-    var d=window.devicePixelRatio||1;
-    cv.width=innerWidth*d;cv.height=innerHeight*d;
-    cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
-    ctx.setTransform(d,0,0,d,0,0);
-  }
-  rs();addEventListener('resize',rs);
-  function loop(){
-    ctx.clearRect(0,0,innerWidth,innerHeight);
-    for(var i=P.length-1;i>=0;i--){
-      var p=P[i];
-      p.x+=p.vx;p.y+=p.vy;
-      p.vy+=0.06;p.vx*=0.985;p.vy*=0.985;
-      p.life-=p.dec;
-      if(p.life<=0){P.splice(i,1);continue;}
-      ctx.globalAlpha=Math.max(p.life,0);
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.29);
-      ctx.fillStyle=p.c;ctx.fill();
-    }
-    ctx.globalAlpha=1;
-    raf=P.length?requestAnimationFrame(loop):null;
-    if(!P.length)ctx.clearRect(0,0,innerWidth,innerHeight);
-  }
-  addEventListener('click',function(e){
-    for(var i=0;i<28;i++){
-      var a=Math.random()*6.283,s=2+Math.random()*4.5;
-      P.push({
-        x:e.clientX,y:e.clientY,
-        vx:Math.cos(a)*s,vy:Math.sin(a)*s-1.2,
-        life:1,dec:0.014+Math.random()*0.02,
-        r:1.5+Math.random()*2.5,
-        c:COLORS[(Math.random()*COLORS.length)|0]
-      });
-    }
-    if(!raf)raf=requestAnimationFrame(loop);
-  });
-})();
-</script>
 
 </body>
 </html>

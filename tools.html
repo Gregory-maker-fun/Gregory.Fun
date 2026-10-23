@@ -3,10 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>工具库 · Gregory</title>
+<title data-i18n="title_tools">工具库 · Gregory</title>
 <meta name="description" content="Gregory 内部工具库——配送运营、制度规范、流程通知与交接沉淀的可用工具集合。">
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link href="https://fonts.loli.net/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<script>
+/* 主题预置：防止暗色模式闪白 */
+(function(){
+  var m=localStorage.getItem('gt_theme')||'auto';
+  var d=m==='dark'||(m==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.dataset.theme=d?'dark':'light';
+})();
+</script>
+<script src="assets/app.js" defer></script>
 <style>
   :root{
     --brand:#FF6B35;
@@ -15,14 +24,31 @@
     --ink-2:#4A515E;
     --ink-3:#8A9099;
     --line:#E8E2DB;
+    --line-soft:#F2EEE9;
     --paper:#FAF8F5;
     --card:#FFFFFF;
+    --brand-soft:#FFF1E9;
+    --topbar-bg:rgba(250,248,245,.92);
+    --pending-line:#DDD6CE;
+  }
+  html[data-theme="dark"]{
+    --ink:#ECEDEF;
+    --ink-2:#B6BBC4;
+    --ink-3:#787E88;
+    --line:#2A2E36;
+    --line-soft:#262A31;
+    --paper:#14161B;
+    --card:#1C1F26;
+    --brand-soft:#33231A;
+    --topbar-bg:rgba(20,22,27,.9);
+    --pending-line:#3A3F47;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
     background:var(--paper);color:var(--ink);line-height:1.65;
     -webkit-font-smoothing:antialiased;
+    transition:background .25s ease,color .25s ease;
   }
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
 
@@ -50,9 +76,10 @@
 
   /* ---------- 顶部 ---------- */
   .topbar{
-    display:flex;align-items:center;justify-content:space-between;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
     padding:22px 0;border-bottom:1px solid var(--line);
   }
+  .topbar-left{display:flex;align-items:center;gap:16px;}
   .back{
     display:inline-flex;align-items:center;gap:7px;
     font-size:13px;letter-spacing:.06em;color:var(--ink-3);text-decoration:none;
@@ -73,7 +100,7 @@
   /* ---------- 分区导航 ---------- */
   .nav{
     position:sticky;top:0;z-index:20;
-    background:rgba(250,248,245,.92);backdrop-filter:blur(10px);
+    background:var(--topbar-bg);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
     display:flex;gap:26px;overflow-x:auto;padding:14px 0;
     scrollbar-width:none;
@@ -94,7 +121,12 @@
     font-variant-numeric:tabular-nums;flex:none;
   }
   .sec-head h2{font-size:22px;font-weight:700;letter-spacing:-.2px;}
-  .sec-desc{margin-left:auto;font-size:13px;color:var(--ink-3);text-align:right;}
+  .sec-count{
+    margin-left:auto;flex:none;font-size:12px;color:var(--ink-3);
+    border:1px solid var(--line);border-radius:999px;padding:2px 10px;
+    font-variant-numeric:tabular-nums;
+  }
+  .sec-desc{font-size:13px;color:var(--ink-3);text-align:right;flex:none;}
 
   /* ---------- 卡片 ---------- */
   .grid{
@@ -111,28 +143,28 @@
   }
   .card-tag{
     align-self:flex-start;font-size:11px;letter-spacing:.08em;
-    color:var(--brand-dark);background:#FFF1E9;border-radius:5px;
+    color:var(--brand-dark);background:var(--brand-soft);border-radius:5px;
     padding:3px 9px;margin-bottom:14px;
   }
   .card h3{font-size:17px;font-weight:700;letter-spacing:-.1px;line-height:1.4;}
   .card .lead{margin-top:9px;font-size:13.5px;color:var(--ink-2);}
 
-  .field{margin-top:18px;padding-top:14px;border-top:1px solid #F2EEE9;font-size:13px;}
+  .field{margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft);font-size:13px;}
   .field dt{color:var(--ink-3);font-size:11.5px;letter-spacing:.06em;margin-bottom:4px;}
   .field dd{color:var(--ink-2);}
 
   /* 待接入占位态 */
   .card.pending{
-    border-style:dashed;border-color:#DDD6CE;background:transparent;
+    border-style:dashed;border-color:var(--pending-line);background:transparent;
   }
-  .card.pending .card-tag{color:var(--ink-3);background:#F2EEE9;}
+  .card.pending .card-tag{color:var(--ink-3);background:var(--line-soft);}
   .card.pending h3{color:var(--ink-3);font-weight:600;}
-  .card.pending .lead{color:#A9AEB6;}
+  .card.pending .lead{color:var(--ink-3);}
 
   /* ---------- 页脚 ---------- */
   .foot{
     margin-top:88px;border-top:1px solid var(--line);
-    padding:30px 0 56px;display:flex;justify-content:space-between;gap:24px;
+    padding:30px 0 56px;display:flex;justify-content:space-between;align-items:center;gap:24px;
     font-size:12.5px;color:var(--ink-3);
   }
   .foot b{color:var(--ink-2);font-weight:600;}
@@ -144,7 +176,7 @@
   @media(max-width:600px){
     .wrap{padding:0 20px;}
     .grid{grid-template-columns:1fr;}
-    .foot{flex-direction:column;gap:10px;}
+    .foot{flex-direction:column;gap:14px;}
     .brand-mark{width:26px;height:26px;font-size:16px;line-height:26px;border-radius:8px;}
     .brand-name{font-size:19px;}
   }
@@ -157,26 +189,29 @@
 <div class="wrap">
 
   <div class="topbar">
-    <a class="brand" href="index.html">
-      <span class="brand-mark">G</span>
-      <span class="brand-name">Gregory's tools</span>
-    </a>
-    <a class="back" href="index.html"><span>←</span> 返回封面</a>
+    <div class="topbar-left">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">G</span>
+        <span class="brand-name">Gregory's tools</span>
+      </a>
+      <div class="ctrls"></div>
+    </div>
+    <a class="back" href="index.html"><span>←</span> <em style="font-style:normal;" data-i18n="back_home">返回主页</em></a>
   </div>
 
   <header class="hero">
-    <h1>工具库</h1>
-    <p>从仓配配送现场做出来、能直接交给别人用的东西——每项都写清楚解决什么问题、怎么用、需要什么前提。</p>
+    <h1 data-i18n="tools_h1">工具库</h1>
+    <p data-i18n="tools_sub">从仓配配送现场做出来、能直接交给别人用的东西——每项都写清楚解决什么问题、怎么用、需要什么前提。</p>
   </header>
 
 </div>
 
 <nav class="nav">
   <div class="wrap" style="display:flex;gap:26px;">
-    <a href="#s1">01 数据与看板</a>
-    <a href="#s2">02 制度与规范</a>
-    <a href="#s3">03 流程与通知</a>
-    <a href="#s4">04 交接与沉淀</a>
+    <a href="#s1" data-i18n="s1">数据与看板</a>
+    <a href="#s2" data-i18n="s2">制度与规范</a>
+    <a href="#s3" data-i18n="s3">流程与通知</a>
+    <a href="#s4" data-i18n="s4">交接与沉淀</a>
   </div>
 </nav>
 
@@ -186,27 +221,28 @@
   <section class="section" id="s1">
     <div class="sec-head">
       <div class="sec-no">01</div>
-      <h2>数据与看板</h2>
-      <div class="sec-desc">把散在各系统的数据，变成能直接看的结论</div>
+      <h2 data-i18n="s1">数据与看板</h2>
+      <div class="sec-count"></div>
+      <div class="sec-desc" data-i18n="s1d">把散在各系统的数据，变成能直接看的结论</div>
     </div>
     <div class="grid">
 
       <article class="card pending">
-        <div class="card-tag">待接入</div>
-        <h3>工具名称待填</h3>
-        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <div class="card-tag" data-i18n="card_pending">待接入</div>
+        <h3 data-i18n="card_name">工具名称待填</h3>
+        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
         <dl class="field">
-          <dt>解决什么问题</dt>
+          <dt data-i18n="card_q">解决什么问题</dt>
           <dd>—</dd>
         </dl>
       </article>
 
       <article class="card pending">
-        <div class="card-tag">待接入</div>
-        <h3>工具名称待填</h3>
-        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <div class="card-tag" data-i18n="card_pending">待接入</div>
+        <h3 data-i18n="card_name">工具名称待填</h3>
+        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
         <dl class="field">
-          <dt>解决什么问题</dt>
+          <dt data-i18n="card_q">解决什么问题</dt>
           <dd>—</dd>
         </dl>
       </article>
@@ -218,27 +254,28 @@
   <section class="section" id="s2">
     <div class="sec-head">
       <div class="sec-no">02</div>
-      <h2>制度与规范</h2>
-      <div class="sec-desc">把口头约定，固化成谁都能照做的标准</div>
+      <h2 data-i18n="s2">制度与规范</h2>
+      <div class="sec-count"></div>
+      <div class="sec-desc" data-i18n="s2d">把口头约定，固化成谁都能照做的标准</div>
     </div>
     <div class="grid">
 
       <article class="card pending">
-        <div class="card-tag">待接入</div>
-        <h3>工具名称待填</h3>
-        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <div class="card-tag" data-i18n="card_pending">待接入</div>
+        <h3 data-i18n="card_name">工具名称待填</h3>
+        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
         <dl class="field">
-          <dt>解决什么问题</dt>
+          <dt data-i18n="card_q">解决什么问题</dt>
           <dd>—</dd>
         </dl>
       </article>
 
       <article class="card pending">
-        <div class="card-tag">待接入</div>
-        <h3>工具名称待填</h3>
-        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <div class="card-tag" data-i18n="card_pending">待接入</div>
+        <h3 data-i18n="card_name">工具名称待填</h3>
+        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
         <dl class="field">
-          <dt>解决什么问题</dt>
+          <dt data-i18n="card_q">解决什么问题</dt>
           <dd>—</dd>
         </dl>
       </article>
@@ -250,27 +287,28 @@
   <section class="section" id="s3">
     <div class="sec-head">
       <div class="sec-no">03</div>
-      <h2>流程与通知</h2>
-      <div class="sec-desc">重复发生的事，不再每次从零写一遍</div>
+      <h2 data-i18n="s3">流程与通知</h2>
+      <div class="sec-count"></div>
+      <div class="sec-desc" data-i18n="s3d">重复发生的事，不再每次从零写一遍</div>
     </div>
     <div class="grid">
 
       <article class="card pending">
-        <div class="card-tag">待接入</div>
-        <h3>工具名称待填</h3>
-        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <div class="card-tag" data-i18n="card_pending">待接入</div>
+        <h3 data-i18n="card_name">工具名称待填</h3>
+        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
         <dl class="field">
-          <dt>解决什么问题</dt>
+          <dt data-i18n="card_q">解决什么问题</dt>
           <dd>—</dd>
         </dl>
       </article>
 
       <article class="card pending">
-        <div class="card-tag">待接入</div>
-        <h3>工具名称待填</h3>
-        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <div class="card-tag" data-i18n="card_pending">待接入</div>
+        <h3 data-i18n="card_name">工具名称待填</h3>
+        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
         <dl class="field">
-          <dt>解决什么问题</dt>
+          <dt data-i18n="card_q">解决什么问题</dt>
           <dd>—</dd>
         </dl>
       </article>
@@ -282,27 +320,28 @@
   <section class="section" id="s4">
     <div class="sec-head">
       <div class="sec-no">04</div>
-      <h2>交接与沉淀</h2>
-      <div class="sec-desc">人走了，东西还在</div>
+      <h2 data-i18n="s4">交接与沉淀</h2>
+      <div class="sec-count"></div>
+      <div class="sec-desc" data-i18n="s4d">人走了，东西还在</div>
     </div>
     <div class="grid">
 
       <article class="card pending">
-        <div class="card-tag">待接入</div>
-        <h3>工具名称待填</h3>
-        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <div class="card-tag" data-i18n="card_pending">待接入</div>
+        <h3 data-i18n="card_name">工具名称待填</h3>
+        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
         <dl class="field">
-          <dt>解决什么问题</dt>
+          <dt data-i18n="card_q">解决什么问题</dt>
           <dd>—</dd>
         </dl>
       </article>
 
       <article class="card pending">
-        <div class="card-tag">待接入</div>
-        <h3>工具名称待填</h3>
-        <p class="lead">一句话讲清它替谁省下了什么。</p>
+        <div class="card-tag" data-i18n="card_pending">待接入</div>
+        <h3 data-i18n="card_name">工具名称待填</h3>
+        <p class="lead" data-i18n="card_lead">一句话讲清它替谁省下了什么。</p>
         <dl class="field">
-          <dt>解决什么问题</dt>
+          <dt data-i18n="card_q">解决什么问题</dt>
           <dd>—</dd>
         </dl>
       </article>
@@ -311,54 +350,14 @@
   </section>
 
   <footer class="foot">
-    <div>内部使用 · <b>新同事接手可直接按此上手</b></div>
-    <div>由 Gregory 维护 · 内容持续补充</div>
+    <div><span data-i18n="foot_internal_a">内部使用 · </span><b data-i18n="foot_internal_b">新同事接手可直接按此上手</b></div>
+    <button class="coffee-btn" data-coffee type="button">
+      <span data-i18n="coffee_btn">请我喝杯咖啡</span>
+    </button>
+    <div data-i18n="foot_maintain">由 Gregory 维护 · 内容持续补充</div>
   </footer>
 
 </div>
-
-<script>
-(function(){
-  var cv=document.getElementById('fx'),ctx=cv.getContext('2d');
-  var P=[],raf=null,COLORS=['#FF6B35','#D9480F','#FFB088','#FFD9C4','#FFEDE2','#FFFFFF'];
-  function rs(){
-    var d=window.devicePixelRatio||1;
-    cv.width=innerWidth*d;cv.height=innerHeight*d;
-    cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
-    ctx.setTransform(d,0,0,d,0,0);
-  }
-  rs();addEventListener('resize',rs);
-  function loop(){
-    ctx.clearRect(0,0,innerWidth,innerHeight);
-    for(var i=P.length-1;i>=0;i--){
-      var p=P[i];
-      p.x+=p.vx;p.y+=p.vy;
-      p.vy+=0.06;p.vx*=0.985;p.vy*=0.985;
-      p.life-=p.dec;
-      if(p.life<=0){P.splice(i,1);continue;}
-      ctx.globalAlpha=Math.max(p.life,0);
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.29);
-      ctx.fillStyle=p.c;ctx.fill();
-    }
-    ctx.globalAlpha=1;
-    raf=P.length?requestAnimationFrame(loop):null;
-    if(!P.length)ctx.clearRect(0,0,innerWidth,innerHeight);
-  }
-  addEventListener('click',function(e){
-    for(var i=0;i<28;i++){
-      var a=Math.random()*6.283,s=2+Math.random()*4.5;
-      P.push({
-        x:e.clientX,y:e.clientY,
-        vx:Math.cos(a)*s,vy:Math.sin(a)*s-1.2,
-        life:1,dec:0.014+Math.random()*0.02,
-        r:1.5+Math.random()*2.5,
-        c:COLORS[(Math.random()*COLORS.length)|0]
-      });
-    }
-    if(!raf)raf=requestAnimationFrame(loop);
-  });
-})();
-</script>
 
 </body>
 </html>
